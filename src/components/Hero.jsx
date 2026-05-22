@@ -23,7 +23,7 @@ export default function Hero() {
               text-[#F4F4ED]
               leading-[0.92]
               tracking-[-0.04em]
-              text-[4.5rem]
+              text-[2.5rem]
               md:text-[5rem]
               lg:text-[6.5rem]
             "

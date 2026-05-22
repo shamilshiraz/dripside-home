@@ -89,7 +89,7 @@ const FlipLink = ({ text, light = false }) => {
 }
 export default function Navbar() {
   return (
-    <nav className="w-full fixed z-100 px-6 pt-4">
+    <nav className="w-full fixed z-100 px-2 sm:px-6 pt-4">
       <div
         className="
           relative
