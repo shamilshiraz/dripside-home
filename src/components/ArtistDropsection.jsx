@@ -79,7 +79,7 @@ const FlipLink = ({ text, className = "" }) => {
 
 export default function ArtistDropSection() {
   return (
-    <section className="w-full bg-[#0e1213] text-[#f3f1eb] px-4 sm:px-6 py-6">
+    <section className="w-full bg-[#0e1213] text-[#f3f1eb] px-4 sm:px-6 py-20">
       {/* TITLE */}
       <h1
         className="

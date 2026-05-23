@@ -317,7 +317,7 @@ export default function Navbar() {
             />
           </div>
 
-          {/* RIGHT - DESKTOP */}
+          {/* RIGHT - DESKTOP (hidden on mobile) */}
           <div
             className="
               hidden
@@ -342,7 +342,7 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* MOBILE SPACER */}
+          {/* MOBILE SPACER - HIDDEN ON DESKTOP, VISIBLE ON MOBILE */}
           <div
             className="sm:hidden w-10"
             aria-hidden="true"

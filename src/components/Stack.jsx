@@ -60,7 +60,7 @@ export default function StackScrollImage() {
   });
 
   return (
-    <section ref={outerRef} className="relative h-[400vh]">
+    <section ref={outerRef} className="relative h-[400vh] ">
       {/* STICKY FRAME */}
       <div className="sticky top-0 h-screen overflow-hidden">
 
