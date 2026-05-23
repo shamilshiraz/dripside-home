@@ -221,7 +221,7 @@ export default function FeaturedCarousel() {
             transition={{ duration: 0.3 }}
             className="
               shrink-0
-              w-[180px]
+              w-[80vw]
               sm:w-[260px]
               group
               cursor-pointer
