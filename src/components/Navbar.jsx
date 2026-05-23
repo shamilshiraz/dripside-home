@@ -1,19 +1,16 @@
-import logo from "../assets/nvwlogo.svg"
+import { useState } from "react";
+import logo from "../assets/nvwlogo.svg";
 
 const FlipLink = ({ text, light = false }) => {
   return (
     <button
       className={`
-        group
-        relative
-        overflow-hidden
-        h-[20px]
+        group relative overflow-hidden h-[20px]
         flex items-center justify-center
         ${light ? "text-[#191B1C]" : "text-[#F4F4ED]"}
       `}
     >
       <span className="relative block leading-none">
-
         {/* TOP TEXT */}
         <span
           className="
@@ -28,14 +25,8 @@ const FlipLink = ({ text, light = false }) => {
           {text.split("").map((letter, i) => (
             <span
               key={i}
-              className="
-                inline-block
-                font-satoshi
-                text-sm
-              "
-              style={{
-                transitionDelay: `${i * 0.04}s`,
-              }}
+              className="inline-block font-satoshi text-sm"
+              style={{ transitionDelay: `${i * 0.04}s` }}
             >
               {letter === " " ? "\u00A0" : letter}
             </span>
@@ -74,104 +65,290 @@ const FlipLink = ({ text, light = false }) => {
                 [transform-origin:bottom]
                 will-change-transform
               "
-              style={{
-                transitionDelay: `${i * 0.04}s`,
-              }}
+              style={{ transitionDelay: `${i * 0.04}s` }}
             >
               {letter === " " ? "\u00A0" : letter}
             </span>
           ))}
         </span>
-
       </span>
     </button>
-  )
-}
+  );
+};
+
+const menuLinks = [
+  { label: "Home", sub: "Back to start" },
+  { label: "Shop", sub: "Browse the collection" },
+  { label: "About", sub: "Our story" },
+  { label: "Journal", sub: "Notes & updates" },
+  { label: "Contact", sub: "Get in touch" },
+];
+
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <nav className="w-full fixed z-100 px-2 sm:px-6 pt-4">
+    <>
+      {/* DROPDOWN */}
       <div
-        className="
-          relative
-          flex items-center justify-between
-          h-[72px]
-          px-8
-          rounded-full
-          bg-[#F42D23]
-        "
+        className={`
+          fixed inset-x-0 top-0 z-40
+          px-2 sm:px-6
+          transition-all duration-700
+          ease-[cubic-bezier(0.76,0,0.24,1)]
+          ${
+            open
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }
+        `}
       >
-        {/* LEFT MENU */}
-        <button
-          className="
-            group
-            flex flex-col
-            justify-center
-            gap-[6px]
-          "
+        <div
+          className={`
+            bg-[#191B1C]
+            rounded-b-3xl
+            pt-28
+            pb-10
+            px-6
+            sm:px-10
+            transition-transform duration-700
+            ease-[cubic-bezier(0.76,0,0.24,1)]
+            origin-top
+            ${open ? "scale-y-100" : "scale-y-0"}
+          `}
         >
-          <span
-            className="
-              w-10 h-[4px]
-              rounded-full
-              bg-[#F4F4ED]
-              transition-all
-              duration-500
-              ease-[cubic-bezier(0.76,0,0.24,1)]
-              group-hover:w-7
-            "
-          />
+          {/* NAV LINKS */}
+          <nav className="flex flex-col gap-1 mb-10">
+            {menuLinks.map(({ label, sub }, i) => (
+              <a
+                key={label}
+                href="#"
+                className="
+                  group
+                  flex
+                  items-baseline
+                  justify-between
+                  border-b
+                  border-white/10
+                  py-4
+                  text-[#F4F4ED]
+                  hover:text-[#F42D23]
+                  transition-[opacity,transform,color]
+                  duration-500
+                "
+                style={{
+                  transitionDelay: open
+                    ? `${0.08 + i * 0.06}s`
+                    : "0s",
+                  opacity: open ? 1 : 0,
+                  transform: open
+                    ? "translateY(0px)"
+                    : "translateY(14px)",
+                }}
+              >
+                <span
+                  className="
+                    font-satoshi
+                    text-4xl
+                    sm:text-5xl
+                    font-medium
+                    tracking-tight
+                  "
+                >
+                  {label}
+                </span>
 
-          <span
-            className="
-              w-10 h-[4px]
-              rounded-full
-              bg-[#F4F4ED]
-              transition-all
-              duration-500
-              ease-[cubic-bezier(0.76,0,0.24,1)]
-              group-hover:w-12
-            "
-          />
-        </button>
+                <span
+                  className="
+                    hidden
+                    sm:block
+                    font-satoshi
+                    text-sm
+                    text-white/40
+                    group-hover:text-[#F42D23]/60
+                    transition-colors
+                    duration-300
+                  "
+                >
+                  {sub}
+                </span>
+              </a>
+            ))}
+          </nav>
 
-        {/* CENTER LOGO */}
+          {/* BOTTOM ROW */}
+          <div
+            className="
+              flex
+              flex-col
+              sm:flex-row
+              items-start
+              sm:items-center
+              justify-between
+              gap-6
+              transition-[opacity,transform]
+              duration-500
+            "
+            style={{
+              transitionDelay: open ? "0.42s" : "0s",
+              opacity: open ? 1 : 0,
+              transform: open
+                ? "translateY(0px)"
+                : "translateY(10px)",
+            }}
+          >
+            {/* SOCIALS */}
+            <div className="flex gap-6">
+              {["Instagram", "Twitter", "TikTok"].map((s) => (
+                <a
+                  key={s}
+                  href="#"
+                  className="
+                    font-satoshi
+                    text-sm
+                    text-white/40
+                    hover:text-[#F4F4ED]
+                    transition-colors
+                    duration-300
+                  "
+                >
+                  {s}
+                </a>
+              ))}
+            </div>
+
+            {/* CTA */}
+            <button
+              className="
+                px-6
+                py-3
+                rounded-full
+                bg-[#F42D23]
+                text-[#F4F4ED]
+                font-satoshi
+                text-sm
+                hover:bg-[#F4F4ED]
+                hover:text-[#191B1C]
+                transition-colors
+                duration-300
+              "
+            >
+              Explore
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* NAVBAR */}
+      <nav className="w-full fixed z-50 px-2 sm:px-6 pt-4">
         <div
           className="
-            absolute
-            left-1/2
-            -translate-x-1/2
+            relative
+            flex
+            items-center
+            justify-between
+            h-[72px]
+            px-5
+            sm:px-8
+            rounded-full
+            bg-[#F42D23]
           "
         >
-          <img
-            src={logo}
-            alt="logo"
-            className="h-6 object-contain"
-          />
-        </div>
-
-        {/* RIGHT */}
-        <div className="flex items-center gap-8">
-
-          <FlipLink text="Search" />
-
-          <FlipLink text="Shop" />
-
+          {/* HAMBURGER */}
           <button
+            onClick={() => setOpen((v) => !v)}
             className="
-              px-6
-              py-3
-              rounded-full
-              bg-[#F4F4ED]
+              flex
+              flex-col
+              justify-center
+              gap-[6px]
             "
+            aria-label="Toggle menu"
           >
-            <FlipLink
-              text="Explore"
-              light
+            <span
+              className={`
+                block
+                w-10
+                h-[4px]
+                rounded-full
+                bg-[#F4F4ED]
+                transition-all
+                duration-500
+                ease-[cubic-bezier(0.76,0,0.24,1)]
+                ${
+                  open
+                    ? "translate-y-[5px] rotate-45"
+                    : "hover:w-7"
+                }
+              `}
+            />
+
+            <span
+              className={`
+                block
+                w-10
+                h-[4px]
+                rounded-full
+                bg-[#F4F4ED]
+                transition-all
+                duration-500
+                ease-[cubic-bezier(0.76,0,0.24,1)]
+                ${
+                  open
+                    ? "-translate-y-[5px] -rotate-45"
+                    : "hover:w-12"
+                }
+              `}
             />
           </button>
 
+          {/* CENTER LOGO */}
+          <div
+            className="
+              absolute
+              left-1/2
+              -translate-x-1/2
+            "
+          >
+            <img
+              src={logo}
+              alt="logo"
+              className="h-6 object-contain"
+            />
+          </div>
+
+          {/* RIGHT - DESKTOP */}
+          <div
+            className="
+              hidden
+              sm:flex
+              items-center
+              gap-8
+            "
+          >
+            <FlipLink text="Search" />
+
+            <FlipLink text="Shop" />
+
+            <button
+              className="
+                px-6
+                py-3
+                rounded-full
+                bg-[#F4F4ED]
+              "
+            >
+              <FlipLink text="Explore" light />
+            </button>
+          </div>
+
+          {/* MOBILE SPACER */}
+          <div
+            className="sm:hidden w-10"
+            aria-hidden="true"
+          />
         </div>
-      </div>
-    </nav>
-  )
+      </nav>
+    </>
+  );
 }
