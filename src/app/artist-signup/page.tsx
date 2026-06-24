@@ -173,12 +173,16 @@ function ArtistSignupForm() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#191B1C]">
-      {/* LEFT — image panel */}
+      {/* LEFT — video panel */}
       <div className="hidden md:block relative w-1/2">
-        <img
-          src="/cdwasa.jpg"
-          alt="Dripside"
+        <video
+          src="/videos/banner1.mp4"
           className="absolute inset-0 h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
         />
         <div className="absolute inset-0 bg-black/30" />
 
@@ -208,7 +212,7 @@ function ArtistSignupForm() {
       <div className="flex flex-1 items-center justify-center px-6 py-14">
         <div className="w-full max-w-sm">
           {/* Step progress */}
-          <div className="flex items-center gap-2 mb-10">
+          {/* <div className="flex items-center gap-2 mb-10">
             {STEPS.map((s, i) => (
               <div key={i} className="flex items-center gap-2 flex-1">
                 <div className="flex flex-col items-center gap-1 shrink-0">
@@ -237,7 +241,7 @@ function ArtistSignupForm() {
                 )}
               </div>
             ))}
-          </div>
+          </div> */}
 
           {/* Heading */}
           <div className="mb-7">
