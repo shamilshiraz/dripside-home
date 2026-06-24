@@ -175,12 +175,13 @@ export default function Navbar() {
             <FlipLink text="Search" />
             <FlipLink text="Shop" />
 
-            <button className="px-6 py-3 rounded-full bg-[#F4F4ED]">
-              <FlipLink text="Explore" light />
-            </button>
+            <div className="flex items-center gap-2">
+              <button className="px-6 py-3 rounded-full bg-[#F4F4ED]">
+                <FlipLink text="Explore" light />
+              </button>
 
-            {/* USER BUTTON */}
-            <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+              {/* USER BUTTON */}
+              <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
               <PopoverTrigger
                 onClick={handleAccountClick}
                 className="
@@ -292,7 +293,8 @@ export default function Navbar() {
                   </div>
                 </PopoverContent>
               )}
-            </Popover>
+              </Popover>
+            </div>
           </div>
 
           {/* MOBILE SPACER */}
