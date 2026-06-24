@@ -28,10 +28,24 @@ export const UserApi = createApi({
     }),
 
     signup: builder.mutation({
-      query: (user: { name: string; email: string; password: string }) => ({
+      query: (user: {
+        name: string;
+        username: string;
+        email: string;
+        phone: string;
+        password: string;
+      }) => ({
         url: "/user/register",
         method: "POST",
         body: user,
+      }),
+    }),
+
+    verifyOtp: builder.mutation({
+      query: (credentials: { email: string; otp: string }) => ({
+        url: "/auth/verify-otp",
+        method: "POST",
+        body: credentials,
       }),
     }),
 
@@ -76,6 +90,7 @@ export const {
   useSigninMutation,
   useSignupMutation,
   useSignoutMutation,
+  useVerifyOtpMutation,
   useGetUserProfileQuery,
   useGetActiveArtistsQuery,
   useGetAllProductsPublicQuery,

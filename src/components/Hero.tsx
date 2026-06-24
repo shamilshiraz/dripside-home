@@ -4,10 +4,14 @@ export default function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* BG */}
-      <img
-        src="/hero2.jpg"
-        alt="hero"
+      <video
+        src="/videos/banner1.mp4"
         className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
       />
 
       {/* OVERLAY */}
