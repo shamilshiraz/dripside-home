@@ -3,7 +3,18 @@ import { ArrowRight, Clock } from "lucide-react";
 
 export default function RequestedPage() {
   return (
-    <div className="min-h-screen bg-[#191B1C] flex flex-col items-center justify-center px-6 text-center">
+    <div className="relative min-h-screen bg-[#191B1C] flex flex-col items-center justify-center overflow-hidden px-6 text-center">
+      <video
+        src="/videos/banner1.mp4"
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-[#191B1C]/75" />
+      <div className="relative z-10 flex flex-col items-center">
       {/* Icon */}
       <div className="w-16 h-16 rounded-2xl bg-[#F42D23]/10 border border-[#F42D23]/20 flex items-center justify-center mb-8">
         <Clock size={28} className="text-[#F42D23]" />
@@ -67,6 +78,7 @@ export default function RequestedPage() {
           Contact support
         </Link>
       </p>
+      </div>
     </div>
   );
 }
