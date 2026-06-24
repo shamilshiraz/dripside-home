@@ -64,7 +64,7 @@ export default function FeaturedCarousel() {
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return
 
-    const amount = 320
+    const amount = 390
 
     scrollRef.current.scrollBy({
       left: direction === 'left' ? -amount : amount,
@@ -150,8 +150,8 @@ export default function FeaturedCarousel() {
             transition={{ duration: 0.3 }}
             className="
               shrink-0
-              w-[80vw]
-              sm:w-[260px]
+              w-[86vw]
+              sm:w-[390px]
               group
               cursor-pointer
             "
