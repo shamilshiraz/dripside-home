@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery, type BaseQueryFn, type FetchArgs, type FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import { clearCredentials } from "@/redux/slices/authSlice";
 
 export interface CartItem {
   _id: string;
@@ -23,22 +24,50 @@ export interface CartResponse {
   };
 }
 
+const rawBase = fetchBaseQuery({
+  baseUrl: process.env.NEXT_PUBLIC_API_URL
+    ? `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api`
+    : "",
+  credentials: "include",
+  prepareHeaders: (headers) => {
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+// Wrap the base query: on 401 / "invalid token", clear session and redirect to login
+const baseQueryWithReauth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  const result = await rawBase(args, api, extraOptions);
+
+  if (result.error) {
+    const status = result.error.status;
+    const msg = (result.error.data as { message?: string } | undefined)?.message ?? "";
+    const isAuthError =
+      status === 401 ||
+      msg.toLowerCase().includes("invalid token") ||
+      msg.toLowerCase().includes("unauthorized") ||
+      msg.toLowerCase().includes("no token");
+
+    if (isAuthError && typeof window !== "undefined") {
+      api.dispatch(clearCredentials());
+      window.location.href = "/login";
+    }
+  }
+
+  return result;
+};
+
 export const UserApi = createApi({
   reducerPath: "UserApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL
-      ? `${process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "")}/api`
-      : "",
-    credentials: "include",
-    prepareHeaders: (headers) => {
-      const token =
-        typeof window !== "undefined" ? localStorage.getItem("token") : null;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["User", "Artists", "Products", "Cart"],
 
   endpoints: (builder) => ({
