@@ -28,7 +28,7 @@ export default function ZoomImage({ src, alt, zoomScale = 2.2 }: ZoomImageProps)
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMouseMove}
-      className="relative overflow-hidden cursor-crosshair w-full h-full"
+      className="relative cursor-crosshair w-full h-full"
     >
       <img
         src={src}

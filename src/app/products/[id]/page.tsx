@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useSelector } from 'react-redux'
 import {
   ArrowLeft,
+  ArrowRight,
   Loader,
   Package,
   ShieldCheck,
@@ -16,7 +17,6 @@ import toast from 'react-hot-toast'
 import { RootState } from '@/redux/store'
 import { useGetProductByIdQuery, useAddToCartMutation } from '@/redux/api/UserApi'
 import Navbar from '@/components/Navbar'
-import ZoomImage from '@/components/ui/ZoomImage'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface IVariant {
@@ -138,97 +138,122 @@ export default function ProductPage() {
   // ── Loading ────────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
-      <div className="h-screen bg-[#191B1C] flex items-center justify-center">
+      <>
         <Navbar />
-        <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-white/10">
-          <Loader size={15} className="animate-spin text-[#F42D23]" />
-          <span className="text-[11px] uppercase tracking-widest text-[#F4F4ED]/60" style={{ fontFamily: 'satoshi' }}>
-            Loading product…
-          </span>
+        <div className="mt-[88px] flex items-center justify-center" style={{ height: 'calc(100vh - 88px)', background: '#191B1C' }}>
+          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-white/10">
+            <Loader size={15} className="animate-spin text-[#F42D23]" />
+            <span className="text-[11px] uppercase tracking-widest text-[#F4F4ED]/60" style={{ fontFamily: 'satoshi' }}>
+              Loading product…
+            </span>
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 
-  // ── Error / Not found ──────────────────────────────────────────────────────
   if (error || !product) {
     return (
-      <div className="h-screen bg-[#191B1C] flex flex-col items-center justify-center gap-5">
+      <>
         <Navbar />
-        <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-          <Package size={24} className="text-[#F4F4ED]/20" />
+        <div className="mt-[88px] flex flex-col items-center justify-center gap-5" style={{ height: 'calc(100vh - 88px)', background: '#191B1C' }}>
+          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+            <Package size={24} className="text-[#F4F4ED]/20" />
+          </div>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-[#F4F4ED]/40" style={{ fontFamily: 'satoshi' }}>
+            Product not found
+          </p>
+          <button
+            onClick={() => router.push('/')}
+            className="text-xs uppercase tracking-widest text-[#F42D23] hover:underline"
+            style={{ fontFamily: 'satoshi' }}
+          >
+            Back to Home
+          </button>
         </div>
-        <p className="text-[11px] uppercase tracking-[0.25em] text-[#F4F4ED]/40" style={{ fontFamily: 'satoshi' }}>
-          Product not found
-        </p>
-        <button
-          onClick={() => router.push('/')}
-          className="text-xs uppercase tracking-widest text-[#F42D23] hover:underline"
-          style={{ fontFamily: 'satoshi' }}
-        >
-          Back to Home
-        </button>
-      </div>
+      </>
     )
   }
 
   // ── Main layout ────────────────────────────────────────────────────────────
   return (
-    <div className="bg-[#191B1C]">
+    <>
       <Navbar />
 
-      {/*
-        Fixed panel pinned to the viewport below the navbar.
-        Both halves scroll independently — the page body never scrolls.
-      */}
-      {/*
-        Mobile  → container scrolls as one column
-        Desktop → container is rigid; each half scrolls independently
-      */}
-      <div className="fixed inset-0 top-[88px] bg-[#191B1C]
-        flex flex-col overflow-y-auto
-        lg:flex-row lg:overflow-hidden
-      ">
+      {/* Same pattern as user/ — no outer wrapper, just the split container */}
+      <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-88px)] lg:overflow-hidden bg-[#191B1C] mt-[88px]">
 
-        {/* ── LEFT: Image gallery ──────────────────────────────────────── */}
-        <div className="w-full bg-[#111213] relative lg:w-1/2 lg:h-full lg:overflow-y-auto">
+        {/* ── LEFT: image slider ── */}
+        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full bg-[#111213] relative flex flex-col">
 
-          {/* Back button */}
-          <button
-            onClick={() => router.back()}
-            className="absolute top-5 left-5 z-20 p-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors"
-          >
-            <ArrowLeft size={16} className="text-[#F4F4ED]" />
-          </button>
+          {/* Main image */}
+          <div className="relative flex-1 overflow-hidden">
+            {images.length === 0 ? (
+              <div className="w-full h-full min-h-[60vh] flex items-center justify-center">
+                <Package size={48} className="text-[#F4F4ED]/10" />
+              </div>
+            ) : (
+              <img
+                src={images[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-cover transition-opacity duration-300"
+              />
+            )}
 
-          {images.length === 0 ? (
-            <div className="w-full h-full min-h-[60vh] flex items-center justify-center">
-              <Package size={48} className="text-[#F4F4ED]/10" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-px bg-[#191B1C]">
+            {/* Back */}
+            <button
+              onClick={() => router.back()}
+              className="absolute top-5 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
+            >
+              <ArrowLeft size={16} className="text-[#F4F4ED]" />
+            </button>
+
+            {/* Prev / Next */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={() => setSelectedImage((i) => (i - 1 + images.length) % images.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
+                >
+                  <ArrowLeft size={15} className="text-[#F4F4ED]" />
+                </button>
+                <button
+                  onClick={() => setSelectedImage((i) => (i + 1) % images.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
+                >
+                  <ArrowRight size={15} className="text-[#F4F4ED]" />
+                </button>
+              </>
+            )}
+
+            {/* Counter */}
+            {images.length > 1 && (
+              <div className="absolute bottom-4 right-4 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-[#F4F4ED]/70 text-[10px]" style={{ fontFamily: 'satoshi' }}>
+                {selectedImage + 1} / {images.length}
+              </div>
+            )}
+          </div>
+
+          {/* Thumbnail strip */}
+          {images.length > 1 && (
+            <div className="flex gap-1.5 p-3 bg-[#0d0e0f] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {images.map((src, i) => (
-                <div
+                <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`
-                    relative overflow-hidden cursor-pointer aspect-[4/5]
-                    transition-all duration-300
-                    ${selectedImage === i ? 'ring-2 ring-inset ring-[#F42D23]' : ''}
-                  `}
+                  className={`shrink-0 w-14 h-14 rounded overflow-hidden border-2 transition-all duration-200 ${
+                    selectedImage === i ? 'border-[#F42D23] opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+                  }`}
                 >
-                  <ZoomImage src={src} alt={`${product.name} — view ${i + 1}`} />
-                  {selectedImage === i && (
-                    <div className="absolute inset-0 bg-[#F42D23]/10 pointer-events-none" />
-                  )}
-                </div>
+                  <img src={src} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                </button>
               ))}
             </div>
           )}
         </div>
 
-        {/* ── RIGHT: Details panel ─────────────────────────────────────── */}
-        <div className="w-full bg-[#191B1C] lg:w-1/2 lg:h-full lg:overflow-y-auto">
+        {/* ── RIGHT: details panel ── */}
+        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full lg:overflow-y-auto bg-[#191B1C]">
           <div className="min-h-full flex items-start lg:items-center">
             <div className="w-full px-6 py-10 lg:px-14 lg:py-12 max-w-xl mx-auto space-y-6">
 
@@ -467,6 +492,6 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
