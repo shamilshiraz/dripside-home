@@ -140,10 +140,10 @@ export default function ProductPage() {
     return (
       <>
         <Navbar compact />
-        <div className="flex min-h-screen items-center justify-center bg-[#191B1C]">
-          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-white/10">
+        <div className="flex min-h-screen items-center justify-center bg-[#e8e6e1]">
+          <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#191B1C]/5 border border-[#191B1C]/10">
             <Loader size={15} className="animate-spin text-[#F42D23]" />
-            <span className="text-[11px] uppercase tracking-widest text-[#F4F4ED]/60" style={{ fontFamily: 'satoshi' }}>
+            <span className="text-[11px] uppercase tracking-widest text-[#191B1C]/60" style={{ fontFamily: 'satoshi' }}>
               Loading product…
             </span>
           </div>
@@ -156,11 +156,11 @@ export default function ProductPage() {
     return (
       <>
         <Navbar compact />
-        <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#191B1C]">
-          <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-            <Package size={24} className="text-[#F4F4ED]/20" />
+        <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#e8e6e1]">
+          <div className="w-14 h-14 rounded-2xl bg-[#191B1C]/5 border border-[#191B1C]/10 flex items-center justify-center">
+            <Package size={24} className="text-[#191B1C]/25" />
           </div>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-[#F4F4ED]/40" style={{ fontFamily: 'satoshi' }}>
+          <p className="text-[11px] uppercase tracking-[0.25em] text-[#191B1C]/50" style={{ fontFamily: 'satoshi' }}>
             Product not found
           </p>
           <button
@@ -181,16 +181,16 @@ export default function ProductPage() {
       <Navbar compact />
 
       {/* Same pattern as user/ — no outer wrapper, just the split container */}
-      <div className="flex flex-col bg-[#191B1C] lg:h-screen lg:flex-row lg:overflow-hidden">
+      <div className="flex flex-col bg-[#e8e6e1] lg:h-screen lg:flex-row lg:overflow-hidden">
 
         {/* ── LEFT: image slider ── */}
-        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full bg-[#111213] relative flex flex-col">
+        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full bg-[#dfddd6] relative flex flex-col">
 
           {/* Main image */}
           <div className="relative flex-1 overflow-hidden">
             {images.length === 0 ? (
               <div className="w-full h-full min-h-[60vh] flex items-center justify-center">
-                <Package size={48} className="text-[#F4F4ED]/10" />
+                <Package size={48} className="text-[#191B1C]/15" />
               </div>
             ) : (
               <img
@@ -236,7 +236,7 @@ export default function ProductPage() {
 
           {/* Thumbnail strip */}
           {images.length > 1 && (
-            <div className="flex gap-1.5 p-3 bg-[#0d0e0f] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex gap-1.5 p-3 bg-[#d8d5cd] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {images.map((src, i) => (
                 <button
                   key={i}
@@ -253,7 +253,7 @@ export default function ProductPage() {
         </div>
 
         {/* ── RIGHT: details panel ── */}
-        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full lg:overflow-y-auto bg-[#191B1C]">
+        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full lg:overflow-y-auto bg-[#e8e6e1]">
           <div className="min-h-full flex items-start lg:items-center">
             <div className="w-full px-6 py-10 lg:px-14 lg:py-12 max-w-xl mx-auto space-y-6">
 
@@ -268,7 +268,7 @@ export default function ProductPage() {
               {/* Name + Price */}
               <div className="space-y-3">
                 <h1
-                  className="text-[#F4F4ED] text-2xl uppercase leading-tight tracking-tight"
+                  className="text-[#111] text-2xl uppercase leading-tight tracking-tight"
                   style={{ fontFamily: 'futuraCB' }}
                 >
                   {product.name}
@@ -276,7 +276,7 @@ export default function ProductPage() {
 
                 <div className="flex items-baseline gap-3">
                   <span
-                    className="text-[#F4F4ED] text-xl"
+                    className="text-[#111] text-xl"
                     style={{ fontFamily: 'futuraCB' }}
                   >
                     ₹ {product.pricing?.salePrice?.toLocaleString('en-IN')}.00
@@ -284,7 +284,7 @@ export default function ProductPage() {
                   {hasDiscount && (
                     <>
                       <span
-                        className="text-[#F4F4ED]/30 text-sm line-through"
+                        className="text-[#111]/35 text-sm line-through"
                         style={{ fontFamily: 'satoshi' }}
                       >
                         ₹ {product.pricing.basePrice.toLocaleString('en-IN')}
@@ -303,24 +303,24 @@ export default function ProductPage() {
               {/* Description */}
               {product.description && (
                 <p
-                  className="text-[#F4F4ED]/45 text-[11px] uppercase leading-relaxed"
+                  className="text-[#111]/55 text-[11px] uppercase leading-relaxed"
                   style={{ fontFamily: 'satoshi' }}
                 >
                   {product.description}
                 </p>
               )}
 
-              <div className="border-t border-white/[0.07]" />
+              <div className="border-t border-[#111]/10" />
 
               {/* Color selector */}
               {availableColors.length > 0 && (
                 <div className="space-y-3">
                   <p
-                    className="text-[10px] uppercase tracking-[0.25em] text-[#F4F4ED]/40"
+                    className="text-[10px] uppercase tracking-[0.25em] text-[#111]/45"
                     style={{ fontFamily: 'satoshi' }}
                   >
                     Colour —{' '}
-                    <span className="text-[#F4F4ED]/80">{selectedColorName}</span>
+                    <span className="text-[#111]/80">{selectedColorName}</span>
                   </p>
                   <div className="flex flex-wrap gap-3">
                     {availableColors.map((color) => (
@@ -335,13 +335,13 @@ export default function ProductPage() {
                           relative w-8 h-8 rounded-full border-2 transition-all duration-200
                           ${selectedColorId === color.id
                             ? 'border-[#F42D23] scale-110 shadow-md shadow-[#F42D23]/30'
-                            : 'border-white/20 hover:border-white/50'
+                            : 'border-[#111]/20 hover:border-[#111]/45'
                           }
                         `}
                         style={{ backgroundColor: color.hex }}
                       >
                         {selectedColorId === color.id && (
-                          <span className="absolute inset-0 rounded-full border-2 border-[#191B1C] scale-[0.6] pointer-events-none" />
+                          <span className="absolute inset-0 rounded-full border-2 border-[#e8e6e1] scale-[0.6] pointer-events-none" />
                         )}
                       </button>
                     ))}
@@ -352,13 +352,13 @@ export default function ProductPage() {
               {/* Size selector */}
               <div className="space-y-3">
                 <p
-                  className="text-[10px] uppercase tracking-[0.25em] text-[#F4F4ED]/40"
+                  className="text-[10px] uppercase tracking-[0.25em] text-[#111]/45"
                   style={{ fontFamily: 'satoshi' }}
                 >
                   Size
                 </p>
                 {availableSizes.length === 0 ? (
-                  <p className="text-xs text-[#F4F4ED]/25 italic" style={{ fontFamily: 'satoshi' }}>
+                  <p className="text-xs text-[#111]/35 italic" style={{ fontFamily: 'satoshi' }}>
                     Select a colour to see available sizes
                   </p>
                 ) : (
@@ -372,10 +372,10 @@ export default function ProductPage() {
                           min-w-[52px] px-4 py-2.5 rounded-xl text-[11px] uppercase tracking-wider
                           border transition-all duration-200
                           ${selectedSizeId === size.id
-                            ? 'bg-[#F4F4ED] text-[#191B1C] border-[#F4F4ED]'
+                            ? 'bg-[#111] text-[#F4F4ED] border-[#111]'
                             : size.stock <= 0
-                            ? 'bg-white/[0.03] text-[#F4F4ED]/20 border-white/10 cursor-not-allowed line-through'
-                            : 'bg-white/[0.04] text-[#F4F4ED]/70 border-white/10 hover:border-white/30 hover:text-[#F4F4ED]'
+                            ? 'bg-[#111]/5 text-[#111]/25 border-[#111]/10 cursor-not-allowed line-through'
+                            : 'bg-[#111]/5 text-[#111]/70 border-[#111]/10 hover:border-[#111]/30 hover:text-[#111]'
                           }
                         `}
                         style={{ fontFamily: 'satoshi' }}
@@ -396,7 +396,7 @@ export default function ProductPage() {
                     flex-1 flex items-center justify-center gap-2
                     h-12 rounded-xl
                     bg-[#F42D23] text-[#F4F4ED] text-[11px] uppercase tracking-[0.15em]
-                    hover:bg-[#F4F4ED] hover:text-[#191B1C]
+                    hover:bg-[#111] hover:text-[#F4F4ED]
                     active:scale-[0.98] transition-all duration-200
                     disabled:opacity-50 disabled:cursor-not-allowed
                   "
@@ -415,8 +415,8 @@ export default function ProductPage() {
                   className="
                     flex-1 flex items-center justify-center gap-2
                     h-12 rounded-xl
-                    bg-white/[0.06] border border-white/10 text-[#F4F4ED] text-[11px] uppercase tracking-[0.15em]
-                    hover:bg-white/10 hover:border-white/20
+                    bg-[#111]/5 border border-[#111]/10 text-[#111] text-[11px] uppercase tracking-[0.15em]
+                    hover:bg-[#111] hover:text-[#F4F4ED] hover:border-[#111]
                     active:scale-[0.98] transition-all duration-200
                     disabled:opacity-50 disabled:cursor-not-allowed
                   "
@@ -438,13 +438,13 @@ export default function ProductPage() {
                   { icon: <Package size={12} />, label: 'Easy Returns' },
                 ].map(({ icon, label }, i, arr) => (
                   <div key={label} className="flex items-center gap-5">
-                    <div className="flex items-center gap-1.5 text-[#F4F4ED]/25">
+                    <div className="flex items-center gap-1.5 text-[#111]/35">
                       {icon}
                       <span className="text-[9px] uppercase tracking-widest" style={{ fontFamily: 'satoshi' }}>
                         {label}
                       </span>
                     </div>
-                    {i < arr.length - 1 && <div className="w-px h-3 bg-white/10" />}
+                    {i < arr.length - 1 && <div className="w-px h-3 bg-[#111]/10" />}
                   </div>
                 ))}
               </div>
@@ -452,9 +452,9 @@ export default function ProductPage() {
               {/* Artist info */}
               {product.artistId && (
                 <>
-                  <div className="border-t border-white/[0.07]" />
-                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.04] border border-white/[0.07]">
-                    <div className="w-10 h-10 rounded-full overflow-hidden bg-white/10 shrink-0">
+                  <div className="border-t border-[#111]/10" />
+                  <div className="flex items-center gap-4 p-4 rounded-2xl bg-[#111]/5 border border-[#111]/10">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-[#111]/10 shrink-0">
                       {product.artistId.profileImage ? (
                         <img
                           src={img(product.artistId.profileImage)}
@@ -463,7 +463,7 @@ export default function ProductPage() {
                         />
                       ) : (
                         <div
-                          className="w-full h-full flex items-center justify-center text-[#F4F4ED] text-xs"
+                          className="w-full h-full flex items-center justify-center text-[#111] text-xs"
                           style={{ fontFamily: 'futuraCB' }}
                         >
                           {(product.artistId.brandname ?? product.artistId.name)?.[0]}
@@ -472,13 +472,13 @@ export default function ProductPage() {
                     </div>
                     <div>
                       <p
-                        className="text-[9px] uppercase tracking-[0.2em] text-[#F4F4ED]/30"
+                        className="text-[9px] uppercase tracking-[0.2em] text-[#111]/40"
                         style={{ fontFamily: 'satoshi' }}
                       >
                         Artist
                       </p>
                       <p
-                        className="text-sm uppercase tracking-tight text-[#F4F4ED] mt-0.5"
+                        className="text-sm uppercase tracking-tight text-[#111] mt-0.5"
                         style={{ fontFamily: 'futuraCB' }}
                       >
                         {product.artistId.brandname ?? product.artistId.name}

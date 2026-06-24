@@ -255,10 +255,10 @@
   }
   body {
     @apply bg-background text-foreground;
-    background-color: #191B1C;
+    /* background-color: #191B1C; */
   }
   html {
     @apply font-sans;
-    background-color: #191B1C;
+    /* background-color: #191B1C; */
   }
 }
