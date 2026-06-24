@@ -1,6 +1,21 @@
 import { createApi, fetchBaseQuery, type BaseQueryFn, type FetchArgs, type FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import { clearCredentials } from "@/redux/slices/authSlice";
 
+export interface IAddress {
+  _id: string;
+  userId: string;
+  name: string;
+  phone: string;
+  addressLine1: string;
+  addressLine2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  isDefault: boolean;
+  isActive: boolean;
+}
+
 export interface CartItem {
   _id: string;
   productId: string;
@@ -68,7 +83,7 @@ const baseQueryWithReauth: BaseQueryFn<
 export const UserApi = createApi({
   reducerPath: "UserApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Artists", "Products", "Cart"],
+  tagTypes: ["User", "Artists", "Products", "Cart", "Orders", "Address"],
 
   endpoints: (builder) => ({
     signin: builder.mutation({
@@ -181,6 +196,24 @@ export const UserApi = createApi({
       query: (id: string) => `/product/${id}`,
     }),
 
+    placeOrder: builder.mutation({
+      query: (orderData: {
+        addressId: string;
+        paymentMethod: "COD" | "ONLINE";
+        couponCode?: string;
+      }) => ({
+        url: "/order",
+        method: "POST",
+        body: orderData,
+      }),
+      invalidatesTags: ["Cart", "Orders"],
+    }),
+
+    getAddressByUserId: builder.query({
+      query: (userId: string) => `/address?userId=${userId}`,
+      providesTags: ["Address"],
+    }),
+
     getAllProductsPublic: builder.query({
       query: (params?: { page?: number; limit?: number; search?: string }) => {
         const qs = new URLSearchParams();
@@ -210,4 +243,6 @@ export const {
   useGetProductByIdQuery,
   useGetActiveArtistsQuery,
   useGetAllProductsPublicQuery,
+  usePlaceOrderMutation,
+  useGetAddressByUserIdQuery,
 } = UserApi;

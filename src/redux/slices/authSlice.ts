@@ -16,11 +16,13 @@ interface UserInfo {
 interface AuthState {
   userInfo: UserInfo | null;
   token: string | null;
+  hydrated: boolean;
 }
 
 const initialState: AuthState = {
   userInfo: null,
   token: null,
+  hydrated: false,
 };
 
 const authSlice = createSlice({
@@ -53,6 +55,7 @@ const authSlice = createSlice({
       const token = localStorage.getItem("token");
       if (userInfo) state.userInfo = JSON.parse(userInfo);
       if (token) state.token = token;
+      state.hydrated = true;
     },
   },
 });
