@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* =========================
+   FONTS
+========================= */
+
+@font-face {
+  font-family: "futuraEB";
+  src: url("/fonts/FuturaStdCondensedExtraBd.otf");
+}
+
+@font-face {
+  font-family: "futuraCB";
+  src: url("/fonts/FuturaStdCondensedBold.otf");
+}
+
+@font-face {
+  font-family: "satoshi";
+  src: url("/fonts/satoshi.otf");
+}
+
+/* =========================
+   COLORS
+========================= */
+
+@theme {
+  --color-primary: #F42D23;
+  --color-black: #191B1C;
+  --color-white: #F4F4ED;
+}
+
+/* =========================
+   FONT UTILITIES
+========================= */
+
+@utility font-eb {
+  font-family: "futuraEB";
+}
+
+@utility font-cb {
+  font-family: "futuraCB";
+}
+
+@utility font-satoshi {
+  font-family: "satoshi";
+}
+
+/* =========================
+   TYPOGRAPHY UTILITIES
+========================= */
+
+@utility h1 {
+  font-family: "futuraEB";
+  font-size: clamp(4rem, 8vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+@utility h2 {
+  font-family: "futuraEB";
+  font-size: clamp(3rem, 6vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+@utility h3 {
+  font-family: "futuraCB";
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+@utility h4 {
+  font-family: "futuraCB";
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  line-height: 1;
+}
+
+@utility body-lg {
+  font-family: "satoshi";
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+@utility body {
+  font-family: "satoshi";
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@utility caption {
+  font-family: "satoshi";
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.hero-line {
+  opacity: 0;
+  transform:
+    perspective(1200px)
+    rotateX(-90deg)
+    translateY(40px);
+
+  transform-origin: bottom;
+
+  animation: heroFlip 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  will-change: transform, opacity;
+}
+
+.hero-subtext {
+  opacity: 0;
+  transform: translateY(20px);
+
+  animation: heroFade 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.45s;
+}
+
+@keyframes heroFlip {
+  to {
+    opacity: 1;
+    transform:
+      perspective(1200px)
+      rotateX(0deg)
+      translateY(0px);
+  }
+}
+
+@keyframes heroFade {
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
