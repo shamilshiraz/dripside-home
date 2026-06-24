@@ -139,8 +139,8 @@ export default function ProductPage() {
   if (isLoading) {
     return (
       <>
-        <Navbar />
-        <div className="mt-[88px] flex items-center justify-center" style={{ height: 'calc(100vh - 88px)', background: '#191B1C' }}>
+        <Navbar compact />
+        <div className="flex min-h-screen items-center justify-center bg-[#191B1C]">
           <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-white/5 border border-white/10">
             <Loader size={15} className="animate-spin text-[#F42D23]" />
             <span className="text-[11px] uppercase tracking-widest text-[#F4F4ED]/60" style={{ fontFamily: 'satoshi' }}>
@@ -155,8 +155,8 @@ export default function ProductPage() {
   if (error || !product) {
     return (
       <>
-        <Navbar />
-        <div className="mt-[88px] flex flex-col items-center justify-center gap-5" style={{ height: 'calc(100vh - 88px)', background: '#191B1C' }}>
+        <Navbar compact />
+        <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#191B1C]">
           <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
             <Package size={24} className="text-[#F4F4ED]/20" />
           </div>
@@ -178,10 +178,10 @@ export default function ProductPage() {
   // ── Main layout ────────────────────────────────────────────────────────────
   return (
     <>
-      <Navbar />
+      <Navbar compact />
 
       {/* Same pattern as user/ — no outer wrapper, just the split container */}
-      <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-88px)] lg:overflow-hidden bg-[#191B1C] mt-[88px]">
+      <div className="flex flex-col bg-[#191B1C] lg:h-screen lg:flex-row lg:overflow-hidden">
 
         {/* ── LEFT: image slider ── */}
         <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full bg-[#111213] relative flex flex-col">
@@ -203,7 +203,7 @@ export default function ProductPage() {
             {/* Back */}
             <button
               onClick={() => router.back()}
-              className="absolute top-5 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
+              className="absolute top-24 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
             >
               <ArrowLeft size={16} className="text-[#F4F4ED]" />
             </button>

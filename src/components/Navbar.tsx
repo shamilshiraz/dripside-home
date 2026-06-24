@@ -27,7 +27,11 @@ const menuLinks = [
 const ARTIST_APP_URL =
   process.env.NEXT_PUBLIC_ARTIST_APP_URL ?? 'http://localhost:3001'
 
-export default function Navbar() {
+interface NavbarProps {
+  compact?: boolean
+}
+
+export default function Navbar({ compact = false }: NavbarProps) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
 
@@ -153,19 +157,24 @@ export default function Navbar() {
       </div>
 
       {/* NAVBAR */}
-      <nav className="w-full fixed z-50 px-2 sm:px-6 pt-4">
-        <div className="relative flex items-center justify-between h-[72px] px-5 sm:px-8 rounded-full bg-[#F42D23]">
+      <nav className={`w-full fixed z-50 px-2 sm:px-6 ${compact ? 'pt-3' : 'pt-4'}`}>
+        <div
+          className={`
+            relative flex items-center justify-between rounded-full bg-[#F42D23]
+            ${compact ? 'h-16 px-5 sm:px-7' : 'h-[72px] px-5 sm:px-8'}
+          `}
+        >
           {/* HAMBURGER */}
           <button
             onClick={() => setOpen((v) => !v)}
-            className="flex flex-col justify-center gap-[6px]"
+            className={`flex flex-col justify-center ${compact ? 'gap-[5px]' : 'gap-[6px]'}`}
             aria-label="Toggle menu"
           >
             <span
-              className={`block w-10 h-[4px] rounded-full bg-[#F4F4ED] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${open ? 'translate-y-[5px] rotate-45' : 'hover:w-7'}`}
+              className={`block rounded-full bg-[#F4F4ED] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${compact ? 'w-8 h-[3px]' : 'w-10 h-[4px]'} ${open ? 'translate-y-[4px] rotate-45' : 'hover:w-7'}`}
             />
             <span
-              className={`block w-10 h-[4px] rounded-full bg-[#F4F4ED] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${open ? '-translate-y-[5px] -rotate-45' : 'hover:w-12'}`}
+              className={`block rounded-full bg-[#F4F4ED] transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${compact ? 'w-8 h-[3px]' : 'w-10 h-[4px]'} ${open ? '-translate-y-[4px] -rotate-45' : 'hover:w-12'}`}
             />
           </button>
 
@@ -174,29 +183,30 @@ export default function Navbar() {
             <img
               src="/icons/nvwlogo.svg"
               alt="Dripside"
-              className="h-6 object-contain"
+              className={`${compact ? 'h-5' : 'h-6'} object-contain`}
             />
           </div>
 
           {/* RIGHT — DESKTOP */}
-          <div className="hidden sm:flex items-center gap-8">
+          <div className={`hidden sm:flex items-center ${compact ? 'gap-6' : 'gap-8'}`}>
             <FlipLink text="Search" />
             <FlipLink text="Shop" />
 
             <div className="flex items-center gap-2">
-              <button className="px-6 py-3 rounded-full bg-[#F4F4ED]">
+              <button className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
                 <FlipLink text="Explore" light />
               </button>
 
               <button
                 onClick={() => router.push('/cart')}
                 className="
-                  relative w-10 h-10 rounded-full
+                  relative rounded-full
                   cursor-pointer
                   bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
                   flex items-center justify-center text-[#F4F4ED]
                   hover:bg-[#F4F4ED]/30 transition-colors duration-300
                 "
+                style={{ width: compact ? 36 : 40, height: compact ? 36 : 40 }}
                 aria-label={`Cart with ${cartCount} items`}
               >
                 <ShoppingBag size={16} strokeWidth={1.8} />
@@ -219,13 +229,14 @@ export default function Navbar() {
                 <PopoverTrigger
                   onClick={handleAccountClick}
                   className="
-                    w-10 h-10 rounded-full
+                    rounded-full
                     cursor-pointer
                     bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
                     flex items-center justify-center text-[#F4F4ED]
                     hover:bg-[#F4F4ED]/30 transition-colors duration-300
                     overflow-hidden
                   "
+                  style={{ width: compact ? 36 : 40, height: compact ? 36 : 40 }}
                   aria-label="Account"
                 >
                   <User size={16} strokeWidth={1.8} />
