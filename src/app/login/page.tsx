@@ -62,11 +62,11 @@ export default function LoginPage() {
       {/* LEFT — image panel */}
       <div className="hidden md:block relative w-1/2">
         <img
-          src="/images/banners/banner-1.png"
+          src="/cdwasa.jpg"
           alt="Dripside"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="absolute bottom-10 left-10 z-10">
           <img
             src="/icons/nvwlogo.svg"
@@ -88,13 +88,13 @@ export default function LoginPage() {
       <div className="flex flex-1 items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
           {/* Logo */}
-          <div className="flex justify-center mb-12">
+          {/* <div className="flex justify-center mb-12">
             <img
               src="/icons/nvwlogo.svg"
               alt="Dripside"
               className="h-7 object-contain"
             />
-          </div>
+          </div> */}
 
           {/* Heading */}
           <div className="mb-8">
@@ -193,7 +193,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#F4F4ED]/30 hover:text-[#F4F4ED] transition-colors"
+                  className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 text-[#F4F4ED]/30 hover:text-[#F4F4ED] transition-colors"
                 >
                   {showPassword ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
@@ -210,6 +210,7 @@ export default function LoginPage() {
               type="submit"
               disabled={isLoading}
               className="
+              cursor-pointer
                 mt-2 w-full h-11 rounded-xl
                 bg-[#F42D23] text-[#F4F4ED]
                 text-sm uppercase tracking-[0.1em]
