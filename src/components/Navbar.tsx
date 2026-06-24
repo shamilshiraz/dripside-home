@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type MouseEvent } from 'react'
-import { User, LogOut, ExternalLink, ChevronRight, Settings } from 'lucide-react'
+import { User, LogOut, ExternalLink, ChevronRight, Settings, ShoppingBag } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
@@ -33,6 +33,7 @@ export default function Navbar() {
 
   const { userInfo, token } = useSelector((state: RootState) => state.auth)
   const isLoggedIn = !!(userInfo && token)
+  const cartCount = 0
 
   const [open, setOpen] = useState(false)
   const [popoverOpen, setPopoverOpen] = useState(false)
@@ -185,6 +186,32 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <button className="px-6 py-3 rounded-full bg-[#F4F4ED]">
                 <FlipLink text="Explore" light />
+              </button>
+
+              <button
+                onClick={() => router.push('/cart')}
+                className="
+                  relative w-10 h-10 rounded-full
+                  cursor-pointer
+                  bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
+                  flex items-center justify-center text-[#F4F4ED]
+                  hover:bg-[#F4F4ED]/30 transition-colors duration-300
+                "
+                aria-label={`Cart with ${cartCount} items`}
+              >
+                <ShoppingBag size={16} strokeWidth={1.8} />
+                <span
+                  className="
+                    absolute -right-1 -top-1
+                    flex h-5 min-w-5 items-center justify-center rounded-full
+                    bg-[#F4F4ED] px-1.5
+                    text-[10px] leading-none text-[#F42D23]
+                    border border-[#F42D23]
+                  "
+                  style={{ fontFamily: 'futuraCB' }}
+                >
+                  {cartCount}
+                </span>
               </button>
 
               {/* USER BUTTON */}
