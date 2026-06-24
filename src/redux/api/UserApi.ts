@@ -148,6 +148,10 @@ export const UserApi = createApi({
       invalidatesTags: ["Cart"],
     }),
 
+    getProductById: builder.query({
+      query: (id: string) => `/product/${id}`,
+    }),
+
     getAllProductsPublic: builder.query({
       query: (params?: { page?: number; limit?: number; search?: string }) => {
         const qs = new URLSearchParams();
@@ -174,6 +178,7 @@ export const {
   useUpdateCartItemMutation,
   useRemoveCartItemMutation,
   useClearCartMutation,
+  useGetProductByIdQuery,
   useGetActiveArtistsQuery,
   useGetAllProductsPublicQuery,
 } = UserApi;
