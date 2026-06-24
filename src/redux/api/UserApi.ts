@@ -49,6 +49,20 @@ export const UserApi = createApi({
       }),
     }),
 
+    artistSignup: builder.mutation({
+      query: (formData: FormData) => {
+        const token =
+          typeof window !== "undefined" ? localStorage.getItem("token") : null;
+        return {
+          url: "/artist/artist-signup",
+          method: "POST",
+          body: formData,
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+
     signout: builder.mutation<void, void>({
       query: () => ({
         url: "/signout",
@@ -91,6 +105,7 @@ export const {
   useSignupMutation,
   useSignoutMutation,
   useVerifyOtpMutation,
+  useArtistSignupMutation,
   useGetUserProfileQuery,
   useGetActiveArtistsQuery,
   useGetAllProductsPublicQuery,
