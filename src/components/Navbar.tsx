@@ -58,9 +58,16 @@ export default function Navbar() {
     }
   }
 
-  const goToArtistApp = () => {
+  // Passes token + userInfo to the artist app so it can auto-authenticate
+  const handleSwitchToArtist = () => {
+    const token = localStorage.getItem('token')
+    const encodedUserInfo = encodeURIComponent(localStorage.getItem('userInfo') ?? '{}')
+    if (!token) {
+      toast.error('No session found. Please sign in again.')
+      return
+    }
     setPopoverOpen(false)
-    window.open(ARTIST_APP_URL, '_blank', 'noopener,noreferrer')
+    window.location.href = `${ARTIST_APP_URL}?token=${token}&userInfo=${encodedUserInfo}`
   }
 
   return (
@@ -228,20 +235,39 @@ export default function Navbar() {
                     </div>
 
                     <div className="bg-[#080909] px-6 py-5 flex flex-col gap-3">
-                          <button
-                        onClick={goToArtistApp}
-                        className="
-                          flex items-center justify-between
-                          h-10 px-4 rounded-xl
-                          bg-[#151718] border border-[#F4F4ED]/10
-                          text-[#F4F4ED] text-sm
-                          hover:border-[#F42D23]/50 hover:text-[#F42D23] hover:bg-[#1D2021] transition-colors duration-200
-                        "
-                        style={{ fontFamily: 'satoshi' }}
-                      >
-                        Switch to artist
-                        <ExternalLink size={13} className="opacity-50" />
-                      </button>
+                      {/* Role-based artist action */}
+                      {userInfo?.role === 'ARTIST' ? (
+                        <button
+                          onClick={handleSwitchToArtist}
+                          className="
+                            flex items-center justify-between
+                            h-10 px-4 rounded-xl
+                            bg-[#151718] border border-[#F4F4ED]/10
+                            text-[#F4F4ED] text-sm
+                            hover:border-[#F42D23]/50 hover:text-[#F42D23] hover:bg-[#1D2021] transition-colors duration-200
+                          "
+                          style={{ fontFamily: 'satoshi' }}
+                        >
+                          Switch to Artist
+                          <ExternalLink size={13} className="opacity-50" />
+                        </button>
+                      ) : (
+                        <Link
+                          href="/artist-signup"
+                          onClick={() => setPopoverOpen(false)}
+                          className="
+                            flex items-center justify-between
+                            h-10 px-4 rounded-xl
+                            bg-[#151718] border border-[#F4F4ED]/10
+                            text-[#F4F4ED] text-sm
+                            hover:border-[#F42D23]/50 hover:text-[#F42D23] hover:bg-[#1D2021] transition-colors duration-200
+                          "
+                          style={{ fontFamily: 'satoshi' }}
+                        >
+                          Become an Artist
+                          <ExternalLink size={13} className="opacity-50" />
+                        </Link>
+                      )}
                       
                       <Link
                         href="/profile"
