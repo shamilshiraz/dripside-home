@@ -182,117 +182,117 @@ export default function Navbar() {
 
               {/* USER BUTTON */}
               <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-              <PopoverTrigger
-                onClick={handleAccountClick}
-                className="
-                  w-10 h-10 rounded-full
-                  cursor-pointer
-                  bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
-                  flex items-center justify-center text-[#F4F4ED]
-                  hover:bg-[#F4F4ED]/30 transition-colors duration-300
-                  overflow-hidden
-                "
-                aria-label="Account"
-              >
-               
-                  <User size={16} strokeWidth={1.8} />
-              
-              </PopoverTrigger>
-
-              {isLoggedIn && (
-                <PopoverContent
-                  side="bottom"
-                  align="end"
-                  sideOffset={14}
-                  className="w-80 p-0 border-0 bg-black rounded-2xl overflow-hidden shadow-2xl"
+                <PopoverTrigger
+                  onClick={handleAccountClick}
+                  className="
+                    w-10 h-10 rounded-full
+                    cursor-pointer
+                    bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
+                    flex items-center justify-center text-[#F4F4ED]
+                    hover:bg-[#F4F4ED]/30 transition-colors duration-300
+                    overflow-hidden
+                  "
+                  aria-label="Account"
                 >
-                  <div className="bg-[#191B1C] px-6 pt-6 pb-5">
-                    {/* <p
+                  <User size={16} strokeWidth={1.8} />
+                </PopoverTrigger>
+
+                {isLoggedIn && (
+                  <PopoverContent
+                    side="bottom"
+                    align="end"
+                    sideOffset={14}
+                    className="w-80 p-0 mt-1.5 border border-[#F4F4ED]/10 bg-[#080909] rounded-2xl overflow-hidden shadow-2xl"
+                  >
+                    <div className="bg-[#101112] px-6 pt-6 pb-5 border-b border-[#F4F4ED]/10">
+                      {/* <p
                       className="text-[10px] uppercase tracking-[0.2em] text-[#F4F4ED]/40 mb-1"
                       style={{ fontFamily: 'satoshi' }}
                     >
                       Signed in as
                     </p> */}
-                    <h2
-                      className="text-[#F4F4ED] text-2xl uppercase leading-none"
-                      style={{ fontFamily: 'futuraCB' }}
-                    >
-                      {userInfo?.name ?? userInfo?.fullname ?? 'User'}
-                    </h2>
-                    {userInfo?.email && (
-                      <p
-                        className="text-[#F4F4ED]/40 text-xs mt-1 break-all"
+                      <h2
+                        className="text-[#F4F4ED] text-2xl uppercase leading-none"
+                        style={{ fontFamily: 'futuraCB' }}
+                      >
+                        {userInfo?.name ?? userInfo?.fullname ?? 'User'}
+                      </h2>
+                      {userInfo?.email && (
+                        <p
+                          className="text-[#F4F4ED]/45 text-xs mt-1 break-all"
+                          style={{ fontFamily: 'satoshi' }}
+                        >
+                          {userInfo.email}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="bg-[#080909] px-6 py-5 flex flex-col gap-3">
+                          <button
+                        onClick={goToArtistApp}
+                        className="
+                          flex items-center justify-between
+                          h-10 px-4 rounded-xl
+                          bg-[#151718] border border-[#F4F4ED]/10
+                          text-[#F4F4ED] text-sm
+                          hover:border-[#F42D23]/50 hover:text-[#F42D23] hover:bg-[#1D2021] transition-colors duration-200
+                        "
                         style={{ fontFamily: 'satoshi' }}
                       >
-                        {userInfo.email}
-                      </p>
-                    )}
-                  </div>
+                        Switch to artist
+                        <ExternalLink size={13} className="opacity-50" />
+                      </button>
+                      
+                      <Link
+                        href="/profile"
+                        onClick={() => setPopoverOpen(false)}
+                        className="
+                          flex items-center justify-between
+                          h-10 px-4 rounded-xl
+                          bg-[#151718] border border-[#F4F4ED]/10
+                          text-[#F4F4ED] text-sm
+                          hover:border-[#F4F4ED]/25 hover:bg-[#1D2021] transition-colors duration-200
+                        "
+                        style={{ fontFamily: 'satoshi' }}
+                      >
+                        My Profile
+                        <ChevronRight size={14} className="text-[#F4F4ED]/45" />
+                      </Link>
 
-                  <div className="bg-[#F4F4ED] px-6 py-5 flex flex-col gap-3">
-                    <Link
-                      href="/profile"
-                      onClick={() => setPopoverOpen(false)}
-                      className="
-                        flex items-center justify-between
-                        h-10 px-4 rounded-xl
-                        bg-white border border-[#191B1C]/10
-                        text-[#191B1C] text-sm
-                        hover:border-[#191B1C]/30 transition-colors duration-200
-                      "
-                      style={{ fontFamily: 'satoshi' }}
-                    >
-                      My Profile
-                      <ChevronRight size={14} className="text-[#191B1C]/40" />
-                    </Link>
+                      <Link
+                        href="/settings"
+                        onClick={() => setPopoverOpen(false)}
+                        className="
+                          flex items-center justify-between
+                          h-10 px-4 rounded-xl
+                          bg-[#151718] border border-[#F4F4ED]/10
+                          text-[#F4F4ED] text-sm
+                          hover:border-[#F4F4ED]/25 hover:bg-[#1D2021] transition-colors duration-200
+                        "
+                        style={{ fontFamily: 'satoshi' }}
+                      >
+                        Settings
+                        <Settings size={14} className="text-[#F4F4ED]/45" />
+                      </Link>
 
-                    <Link
-                      href="/settings"
-                      onClick={() => setPopoverOpen(false)}
-                      className="
-                        flex items-center justify-between
-                        h-10 px-4 rounded-xl
-                        bg-white border border-[#191B1C]/10
-                        text-[#191B1C] text-sm
-                        hover:border-[#191B1C]/30 transition-colors duration-200
-                      "
-                      style={{ fontFamily: 'satoshi' }}
-                    >
-                      Settings
-                      <Settings size={14} className="text-[#191B1C]/40" />
-                    </Link>
+                  
 
-                    <button
-                      onClick={goToArtistApp}
-                      className="
-                        flex items-center justify-between
-                        h-10 px-4 rounded-xl
-                        bg-white border border-[#191B1C]/10
-                        text-[#191B1C] text-sm
-                        hover:border-[#F42D23]/40 hover:text-[#F42D23] transition-colors duration-200
-                      "
-                      style={{ fontFamily: 'satoshi' }}
-                    >
-                      Switch to artist
-                      <ExternalLink size={13} className="opacity-40" />
-                    </button>
-
-                    <button
-                      onClick={handleSignout}
-                      className="
-                        mt-1 flex items-center justify-center gap-2
-                        h-10 px-4 rounded-xl
-                        bg-[#191B1C] text-[#F4F4ED] text-sm uppercase tracking-[0.08em]
-                        hover:bg-[#F42D23] transition-colors duration-300
-                      "
-                      style={{ fontFamily: 'futuraCB' }}
-                    >
-                      <LogOut size={13} />
-                      Logout
-                    </button>
-                  </div>
-                </PopoverContent>
-              )}
+                      <button
+                        onClick={handleSignout}
+                        className="
+                          mt-1 flex items-center justify-center gap-2
+                          h-10 px-4 rounded-xl
+                          bg-[#F42D23] text-[#F4F4ED] text-sm uppercase tracking-[0.08em]
+                          hover:bg-[#C8241C] transition-colors duration-300
+                        "
+                        style={{ fontFamily: 'futuraCB' }}
+                      >
+                        <LogOut size={13} />
+                        Logout
+                      </button>
+                    </div>
+                  </PopoverContent>
+                )}
               </Popover>
             </div>
           </div>
