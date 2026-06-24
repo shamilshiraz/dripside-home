@@ -1,5 +1,28 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export interface CartItem {
+  _id: string;
+  productId: string;
+  productName: string;
+  productImage: string;
+  colorName: string;
+  size: string;
+  price: number;
+  salePrice?: number;
+  quantity: number;
+}
+
+export interface CartResponse {
+  success: boolean;
+  message: string;
+  data: {
+    items: CartItem[];
+    total: number;
+    subtotal: number;
+    itemCount: number;
+  };
+}
+
 export const UserApi = createApi({
   reducerPath: "UserApi",
   baseQuery: fetchBaseQuery({
@@ -16,7 +39,7 @@ export const UserApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["User", "Artists", "Products"],
+  tagTypes: ["User", "Artists", "Products", "Cart"],
 
   endpoints: (builder) => ({
     signin: builder.mutation({
@@ -86,6 +109,45 @@ export const UserApi = createApi({
       providesTags: ["Artists"],
     }),
 
+    getCart: builder.query<CartResponse, void>({
+      query: () => "/cart",
+      providesTags: ["Cart"],
+    }),
+
+    addToCart: builder.mutation({
+      query: (cartItem) => ({
+        url: "/cart",
+        method: "POST",
+        body: cartItem,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    updateCartItem: builder.mutation({
+      query: ({ itemId, quantity }: { itemId: string; quantity: number }) => ({
+        url: `/cart/items/${itemId}`,
+        method: "PUT",
+        body: { quantity },
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    removeCartItem: builder.mutation({
+      query: (itemId: string) => ({
+        url: `/cart/items/${itemId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    clearCart: builder.mutation<void, void>({
+      query: () => ({
+        url: "/cart",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
     getAllProductsPublic: builder.query({
       query: (params?: { page?: number; limit?: number; search?: string }) => {
         const qs = new URLSearchParams();
@@ -107,6 +169,11 @@ export const {
   useVerifyOtpMutation,
   useArtistSignupMutation,
   useGetUserProfileQuery,
+  useGetCartQuery,
+  useAddToCartMutation,
+  useUpdateCartItemMutation,
+  useRemoveCartItemMutation,
+  useClearCartMutation,
   useGetActiveArtistsQuery,
   useGetAllProductsPublicQuery,
 } = UserApi;
