@@ -19,8 +19,8 @@ import {
 const menuLinks = [
   { label: 'Home', href: '/', sub: 'Back to start' },
   { label: 'Shop', href: '/products', sub: 'Browse the collection' },
+  { label: 'Artists', href: '/artists', sub: 'Explore creators' },
   { label: 'About', href: '/about', sub: 'Our story' },
-  { label: 'Journal', href: '/journal', sub: 'Notes & updates' },
   { label: 'Contact', href: '/contact', sub: 'Get in touch' },
 ]
 

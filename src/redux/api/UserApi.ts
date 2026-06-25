@@ -252,6 +252,22 @@ export const UserApi = createApi({
       providesTags: ["Orders"],
     }),
 
+    getArtistBySlug: builder.query({
+      query: (slug: string) => `/artist/slug/${slug}`,
+      providesTags: ["Artists"],
+    }),
+
+    getProductsByArtistId: builder.query({
+      query: ({ artistId, page, limit }: { artistId: string; page?: number; limit?: number }) => {
+        const qs = new URLSearchParams();
+        if (page) qs.append("page", String(page));
+        if (limit) qs.append("limit", String(limit));
+        const q = qs.toString();
+        return `/product/artist/${artistId}${q ? `?${q}` : ""}`;
+      },
+      providesTags: ["Products"],
+    }),
+
     getAllProductsPublic: builder.query({
       query: (params?: { page?: number; limit?: number; search?: string }) => {
         const qs = new URLSearchParams();
@@ -287,4 +303,6 @@ export const {
   useCreateAddressMutation,
   useSetDefaultAddressMutation,
   useGetUserOrdersQuery,
+  useGetArtistBySlugQuery,
+  useGetProductsByArtistIdQuery,
 } = UserApi;
