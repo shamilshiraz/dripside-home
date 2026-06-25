@@ -44,11 +44,11 @@ function ArtistCard({ artist, index }: { artist: Artist; index: number }) {
     >
       <Link href={href} className="group block cursor-pointer">
         {/* Photo */}
-        <div className="relative overflow-hidden bg-[#1a1c1d]">
+        <div className="relative overflow-hidden bg-[#1a1c1d] h-[380px] sm:h-[420px]">
           <img
             src={photo}
             alt={artist.brandname}
-            className="w-full aspect-[0.78] object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-75"
+            className="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-105 group-hover:brightness-75"
           />
 
           {/* Bottom gradient */}
@@ -100,7 +100,7 @@ function ArtistCard({ artist, index }: { artist: Artist; index: number }) {
 function SkeletonCard() {
   return (
     <div className="animate-pulse">
-      <div className="w-full aspect-[0.78] bg-[#d0cec9]" />
+      <div className="w-full h-[380px] sm:h-[420px] bg-[#d0cec9]" />
       <div className="mt-3 space-y-2">
         <div className="h-3 bg-[#d0cec9] rounded w-2/3" />
         <div className="h-2.5 bg-[#d0cec9] rounded w-1/2" />
@@ -193,7 +193,7 @@ function ArtistsPageInner() {
         </div>
 
         {/* ── SEARCH BAR ──────────────────────────────────────────────── */}
-        <div className="sticky top-[72px] z-40 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
+        <div className="sticky top-[86px] z-40 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
 
             <div className="flex-1 relative">
