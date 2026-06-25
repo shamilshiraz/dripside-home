@@ -204,7 +204,7 @@ export default function Navbar({ compact = false }: NavbarProps) {
               </button>
 
                <button
-                onClick={() => router.push('/products')}
+                onClick={() => router.push('/products?focus=search')}
                 className="
                   relative rounded-full
                   cursor-pointer
@@ -213,10 +213,9 @@ export default function Navbar({ compact = false }: NavbarProps) {
                   hover:bg-[#F4F4ED]/30 transition-colors duration-300
                 "
                 style={{ width: compact ? 36 : 40, height: compact ? 36 : 40 }}
-                aria-label={`Cart with ${cartCount} items`}
+                aria-label="Search products"
               >
                 <Search size={16} strokeWidth={1.8} />
-              
               </button>
 
 

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
@@ -192,7 +192,8 @@ function SkeletonCard() {
 // ── Page ──────────────────────────────────────────────────────────────────────
 const LIMIT = 24;
 
-export default function AllProductsPage() {
+function AllProductsPage() {
+  const searchParams = useSearchParams();
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [sort, setSort] = useState("newest");
@@ -200,6 +201,17 @@ export default function AllProductsPage() {
   const [page, setPage] = useState(1);
   const sortRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Auto-focus + select when navigated with ?focus=search
+  useEffect(() => {
+    if (searchParams.get("focus") === "search") {
+      const t = setTimeout(() => {
+        inputRef.current?.focus();
+        inputRef.current?.select();
+      }, 120);
+      return () => clearTimeout(t);
+    }
+  }, [searchParams]);
 
   // Debounce search
   useEffect(() => {
@@ -493,5 +505,17 @@ export default function AllProductsPage() {
         </div>
       </div>
     </>
+  );
+}
+
+export default function AllProductsPageWrapper() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#F4F4ED] flex items-center justify-center">
+        <span className="w-8 h-8 border-2 border-t-transparent border-[#F42D23] rounded-full animate-spin" />
+      </div>
+    }>
+      <AllProductsPage />
+    </Suspense>
   );
 }
