@@ -49,7 +49,7 @@ export default function FeaturedCarousel() {
   const products: Product[] = data?.data?.products ?? []
 
   return (
-    <section className="w-full bg-[#e8e6e1] py-8 sm:py-10 overflow-hidden">
+    <section id="products" className="w-full bg-[#e8e6e1] py-8 sm:py-10 overflow-hidden">
       {/* HEADER */}
       <div className="flex items-center justify-between px-4 sm:px-8 mb-6">
         <h1

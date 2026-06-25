@@ -147,7 +147,7 @@ export default function Navbar({ compact = false }: NavbarProps) {
             </div>
 
             <button
-              onClick={() => { setOpen(false); router.push('/') }}
+              onClick={() => { setOpen(false); router.push('/#products') }}
               className="px-6 py-3 rounded-full bg-[#F42D23] text-[#F4F4ED] font-satoshi text-sm hover:bg-[#F4F4ED] hover:text-[#191B1C] transition-colors duration-300"
             >
               Explore
@@ -193,7 +193,7 @@ export default function Navbar({ compact = false }: NavbarProps) {
             <FlipLink text="Shop" />
 
             <div className="flex items-center gap-2">
-              <button className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
+              <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
                 <FlipLink text="Explore" light />
               </button>
 
