@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import LenisProvider from "@/providers/LenisProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
+import SplashScreen from "@/components/SplashScreen";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Toaster } from "react-hot-toast";
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className={cn("font-sans", geist.variable)}>
       <body>
         <ReduxProvider>
+          <SplashScreen />
           <Toaster
             position="top-center"
             toastOptions={{
