@@ -93,7 +93,9 @@ export default function FeaturedCarousel() {
       {/* FOOTER CTA */}
       <div className="px-4 sm:px-8 mt-8">
         <div className="w-fit px-6 py-3 rounded-full bg-[#ef4934] text-white">
+          <Link href="/products">
           <FlipLink text="Shop all" />
+          </Link>
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ export default function FlipLink({ text, light = false, className = '' }: FlipLi
   return (
     <button
       className={`
-        group relative overflow-hidden h-[20px]
+        group relative cursor-pointer overflow-hidden h-[20px]
         flex items-center justify-center
         ${light ? 'text-[#191B1C]' : 'text-[#F4F4ED]'}
         ${className}

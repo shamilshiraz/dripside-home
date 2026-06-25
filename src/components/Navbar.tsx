@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type MouseEvent } from 'react'
-import { User, LogOut, ExternalLink, ChevronRight, Settings, ShoppingBag } from 'lucide-react'
+import { User, LogOut, ExternalLink, ChevronRight, Settings, ShoppingBag, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
@@ -18,7 +18,7 @@ import {
 
 const menuLinks = [
   { label: 'Home', href: '/', sub: 'Back to start' },
-  { label: 'Shop', href: '/shop', sub: 'Browse the collection' },
+  { label: 'Shop', href: '/products', sub: 'Browse the collection' },
   { label: 'About', href: '/about', sub: 'Our story' },
   { label: 'Journal', href: '/journal', sub: 'Notes & updates' },
   { label: 'Contact', href: '/contact', sub: 'Get in touch' },
@@ -179,23 +179,46 @@ export default function Navbar({ compact = false }: NavbarProps) {
           </button>
 
           {/* CENTER LOGO */}
+         
           <div className="absolute left-1/2 -translate-x-1/2">
+           <Link href="/">
             <img
               src="/icons/nvwlogo.svg"
               alt="Dripside"
               className={`${compact ? 'h-5' : 'h-6'} object-contain`}
             />
+            </Link>
           </div>
+          
 
           {/* RIGHT — DESKTOP */}
           <div className={`hidden sm:flex items-center ${compact ? 'gap-6' : 'gap-8'}`}>
-            <FlipLink text="Search" />
-            <FlipLink text="Shop" />
+            {/* <FlipLink text="Search" /> */}
+            {/* <button onClick={() => router.push('/products')}>
+              <FlipLink text="Shop" />
+            </button> */}
 
             <div className="flex items-center gap-2">
               <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
                 <FlipLink text="Explore" light />
               </button>
+
+               <button
+                onClick={() => router.push('/products')}
+                className="
+                  relative rounded-full
+                  cursor-pointer
+                  bg-[#F4F4ED]/20 border border-[#F4F4ED]/30
+                  flex items-center justify-center text-[#F4F4ED]
+                  hover:bg-[#F4F4ED]/30 transition-colors duration-300
+                "
+                style={{ width: compact ? 36 : 40, height: compact ? 36 : 40 }}
+                aria-label={`Cart with ${cartCount} items`}
+              >
+                <Search size={16} strokeWidth={1.8} />
+              
+              </button>
+
 
               <button
                 onClick={() => router.push('/cart')}
