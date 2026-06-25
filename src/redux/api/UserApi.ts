@@ -214,6 +214,44 @@ export const UserApi = createApi({
       providesTags: ["Address"],
     }),
 
+    updateProfile: builder.mutation({
+      query: (updatedData) => ({
+        url: "/user/profile",
+        method: "PUT",
+        body: updatedData,
+      }),
+      invalidatesTags: ["User"],
+    }),
+
+    createAddress: builder.mutation({
+      query: (addressData) => ({
+        url: "/address/",
+        method: "POST",
+        body: addressData,
+      }),
+      invalidatesTags: ["Address"],
+    }),
+
+    setDefaultAddress: builder.mutation({
+      query: (id: string) => ({
+        url: `/address/${id}/default`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["Address"],
+    }),
+
+    getUserOrders: builder.query({
+      query: (params?: { status?: string; page?: number; limit?: number }) => {
+        const qs = new URLSearchParams();
+        if (params?.status) qs.append("status", params.status);
+        if (params?.page) qs.append("page", String(params.page));
+        if (params?.limit) qs.append("limit", String(params.limit));
+        const q = qs.toString();
+        return `/order${q ? `?${q}` : ""}`;
+      },
+      providesTags: ["Orders"],
+    }),
+
     getAllProductsPublic: builder.query({
       query: (params?: { page?: number; limit?: number; search?: string }) => {
         const qs = new URLSearchParams();
@@ -245,4 +283,8 @@ export const {
   useGetAllProductsPublicQuery,
   usePlaceOrderMutation,
   useGetAddressByUserIdQuery,
+  useUpdateProfileMutation,
+  useCreateAddressMutation,
+  useSetDefaultAddressMutation,
+  useGetUserOrdersQuery,
 } = UserApi;
