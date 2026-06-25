@@ -568,4 +568,4 @@ function ConfirmModal({ title, body, confirmLabel, loading, danger = false, onCo
 }
 
 const primaryBtn =
-  "flex items-center gap-2 h-11 px-6 rounded-full bg-[#F42D23] text-[#191B1C] text-sm uppercase tracking-[0.1em] hover:bg-[#F4F4ED] hover:text-[#191B1C] transition-colors duration-300";
+  "flex items-center gap-2 h-11 px-6 rounded-full bg-[#F42D23] text-white text-sm  tracking-[0.1em] hover:bg-[#000] hover:text-[#fff] transition-colors duration-300";
