@@ -29,9 +29,10 @@ const ARTIST_APP_URL =
 
 interface NavbarProps {
   compact?: boolean
+  flat?: boolean
 }
 
-export default function Navbar({ compact = false }: NavbarProps) {
+export default function Navbar({ compact = false, flat = false }: NavbarProps) {
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
 
@@ -157,10 +158,11 @@ export default function Navbar({ compact = false }: NavbarProps) {
       </div>
 
       {/* NAVBAR */}
-      <nav className={`w-full fixed z-50 px-2 sm:px-6 ${compact ? 'pt-3' : 'pt-4'}`}>
+      <nav className={`w-full fixed top-0 z-50 ${flat ? '' : `px-2 sm:px-6 ${compact ? 'pt-3' : 'pt-4'}`}`}>
         <div
           className={`
-            relative flex items-center justify-between rounded-full bg-[#F42D23]
+            relative flex items-center justify-between bg-[#F42D23]
+            ${flat ? 'rounded-none' : 'rounded-full'}
             ${compact ? 'h-16 px-5 sm:px-7' : 'h-[72px] px-5 sm:px-8'}
           `}
         >
