@@ -158,7 +158,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
       </div>
 
       {/* NAVBAR */}
-      <nav className={`w-full fixed z-50 ${flat ? '' : `px-2 sm:px-6 ${compact ? 'pt-3' : 'pt-4'}`}`}>
+      <nav className={`w-full fixed top-0 z-50 ${flat ? '' : `px-2 sm:px-6 ${compact ? 'pt-3' : 'pt-4'}`}`}>
         <div
           className={`
             relative flex items-center justify-between bg-[#F42D23]

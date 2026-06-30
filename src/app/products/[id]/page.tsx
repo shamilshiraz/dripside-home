@@ -181,13 +181,13 @@ export default function ProductPage() {
     <>
       <Navbar compact flat />
 
-      <div className="flex flex-col bg-[#e8e6e1] lg:h-screen lg:flex-row lg:overflow-hidden">
+      <div className="flex flex-col bg-[#e8e6e1] lg:h-[calc(100vh-4rem)] lg:flex-row lg:overflow-hidden mt-16">
 
         {/* ══ IMAGE AREA: Left sticky + Middle scrollable gallery ══ */}
-        <div className="flex w-full lg:w-[62%] lg:h-screen">
+        <div className="flex w-full lg:w-[62%] lg:h-full">
 
           {/* ── Left: sticky main image ── */}
-          <div className="hidden lg:block lg:w-[54%] lg:h-screen sticky top-0 shrink-0 bg-[#dfddd6] relative overflow-hidden">
+          <div className="hidden lg:block lg:w-[54%] lg:h-full sticky top-0 shrink-0 bg-[#dfddd6] relative overflow-hidden">
             {images.length === 0 ? (
               <div className="w-full h-full flex items-center justify-center">
                 <Package size={48} className="text-[#191B1C]/15" />
@@ -218,7 +218,7 @@ export default function ProductPage() {
           {/* ── Middle: scrollable image gallery ── */}
           <div
             data-lenis-prevent
-            className="hidden lg:flex lg:flex-col lg:w-[46%] lg:h-screen lg:overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="hidden lg:flex lg:flex-col lg:w-[46%] lg:h-full lg:overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {images.length === 0 ? (
               <div className="w-full h-full flex items-center justify-center bg-[#dfddd6]">
