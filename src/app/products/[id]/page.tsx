@@ -187,7 +187,7 @@ export default function ProductPage() {
         <div className="flex w-full lg:w-[62%] lg:h-full">
 
           {/* ── Left: sticky main image ── */}
-          <div className="hidden lg:block lg:w-[54%] lg:h-full sticky top-0 shrink-0 bg-[#dfddd6] relative overflow-hidden">
+          <div className="hidden lg:block lg:w-[54%] lg:h-full sticky top-16 shrink-0 bg-[#dfddd6] relative overflow-hidden">
             {images.length === 0 ? (
               <div className="w-full h-full flex items-center justify-center">
                 <Package size={48} className="text-[#191B1C]/15" />
