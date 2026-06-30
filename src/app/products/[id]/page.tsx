@@ -140,7 +140,7 @@ export default function ProductPage() {
   if (isLoading) {
     return (
       <>
-        <Navbar compact />
+        <Navbar compact flat />
         <div className="flex min-h-screen items-center justify-center bg-[#e8e6e1]">
           <div className="flex items-center gap-3 px-5 py-3 rounded-full bg-[#191B1C]/5 border border-[#191B1C]/10">
             <Loader size={15} className="animate-spin text-[#F42D23]" />
@@ -156,7 +156,7 @@ export default function ProductPage() {
   if (error || !product) {
     return (
       <>
-        <Navbar compact />
+        <Navbar compact flat />
         <div className="flex min-h-screen flex-col items-center justify-center gap-5 bg-[#e8e6e1]">
           <div className="w-14 h-14 rounded-2xl bg-[#191B1C]/5 border border-[#191B1C]/10 flex items-center justify-center">
             <Package size={24} className="text-[#191B1C]/25" />
@@ -179,7 +179,7 @@ export default function ProductPage() {
   // ── Main layout ────────────────────────────────────────────────────────────
   return (
     <>
-      <Navbar compact />
+      <Navbar compact flat />
 
       <div className="flex flex-col bg-[#e8e6e1] lg:h-screen lg:flex-row lg:overflow-hidden">
 
