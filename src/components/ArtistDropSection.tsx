@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import FlipLink from '@/components/ui/FlipLink'
+import Link from 'next/link'
 
 const products = ['ti2.webp', 'ti3.webp', 'ti4.webp']
 
@@ -131,7 +132,9 @@ export default function ArtistDropSection() {
                 text-white
               "
             >
+              <Link href="/artists">
               <FlipLink text="Explore artist" />
+              </Link>
             </div>
 
             {/* ALSO EXPLORE */}
