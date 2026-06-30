@@ -180,52 +180,32 @@ export default function ProductPage() {
     <>
       <Navbar compact />
 
-      {/* Same pattern as user/ — no outer wrapper, just the split container */}
       <div className="flex flex-col bg-[#e8e6e1] lg:h-screen lg:flex-row lg:overflow-hidden">
 
-        {/* ── LEFT: image slider ── */}
-        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full bg-[#dfddd6] relative flex flex-col">
+        {/* ══ IMAGE AREA: Left sticky + Middle scrollable gallery ══ */}
+        <div className="flex w-full lg:w-[62%] lg:h-screen">
 
-          {/* Main image */}
-          <div className="relative flex-1 overflow-hidden">
+          {/* ── Left: sticky main image ── */}
+          <div className="hidden lg:block lg:w-[54%] lg:h-screen sticky top-0 shrink-0 bg-[#dfddd6] relative overflow-hidden">
             {images.length === 0 ? (
-              <div className="w-full h-full min-h-[60vh] flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center">
                 <Package size={48} className="text-[#191B1C]/15" />
               </div>
             ) : (
               <img
+                key={selectedImage}
                 src={images[selectedImage]}
                 alt={product.name}
                 className="w-full h-full object-cover transition-opacity duration-300"
               />
             )}
-
-            {/* Back */}
+            {/* Back button */}
             <button
               onClick={() => router.back()}
-              className="absolute top-24 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
+              className="absolute top-6 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
             >
               <ArrowLeft size={16} className="text-[#F4F4ED]" />
             </button>
-
-            {/* Prev / Next */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={() => setSelectedImage((i) => (i - 1 + images.length) % images.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
-                >
-                  <ArrowLeft size={15} className="text-[#F4F4ED]" />
-                </button>
-                <button
-                  onClick={() => setSelectedImage((i) => (i + 1) % images.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
-                >
-                  <ArrowRight size={15} className="text-[#F4F4ED]" />
-                </button>
-              </>
-            )}
-
             {/* Counter */}
             {images.length > 1 && (
               <div className="absolute bottom-4 right-4 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-[#F4F4ED]/70 text-[10px]" style={{ fontFamily: 'satoshi' }}>
@@ -234,26 +214,82 @@ export default function ProductPage() {
             )}
           </div>
 
-          {/* Thumbnail strip */}
-          {images.length > 1 && (
-            <div className="flex gap-1.5 p-3 bg-[#d8d5cd] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {images.map((src, i) => (
+          {/* ── Middle: scrollable image gallery ── */}
+          <div
+            data-lenis-prevent
+            className="hidden lg:flex lg:flex-col lg:w-[46%] lg:h-screen lg:overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {images.length === 0 ? (
+              <div className="w-full h-full flex items-center justify-center bg-[#dfddd6]">
+                <Package size={32} className="text-[#191B1C]/15" />
+              </div>
+            ) : (
+              images.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`shrink-0 w-14 h-14 rounded overflow-hidden border-2 transition-all duration-200 ${
-                    selectedImage === i ? 'border-[#F42D23] opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+                  className={`relative block w-full shrink-0 aspect-[4/5] overflow-hidden transition-all duration-200 ${
+                    selectedImage === i ? 'ring-2 ring-inset ring-[#F42D23]' : 'hover:opacity-90'
                   }`}
                 >
                   <img src={src} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                  {selectedImage === i && (
+                    <div className="absolute inset-0 bg-[#F42D23]/5 pointer-events-none" />
+                  )}
                 </button>
-              ))}
-            </div>
-          )}
+              ))
+            )}
+          </div>
+
+          {/* ── Mobile: single image with prev/next ── */}
+          <div className="lg:hidden w-full relative bg-[#dfddd6] aspect-[4/5]">
+            {images.length === 0 ? (
+              <div className="w-full h-full flex items-center justify-center">
+                <Package size={48} className="text-[#191B1C]/15" />
+              </div>
+            ) : (
+              <img src={images[selectedImage]} alt={product.name} className="w-full h-full object-cover" />
+            )}
+            <button
+              onClick={() => router.back()}
+              className="absolute top-6 left-5 z-10 p-2.5 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 hover:bg-black/50 transition-colors"
+            >
+              <ArrowLeft size={16} className="text-[#F4F4ED]" />
+            </button>
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={() => setSelectedImage((i) => (i - 1 + images.length) % images.length)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
+                >
+                  <ArrowLeft size={15} className="text-[#F4F4ED]" />
+                </button>
+                <button
+                  onClick={() => setSelectedImage((i) => (i + 1) % images.length)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/30 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/50 transition-colors"
+                >
+                  <ArrowRight size={15} className="text-[#F4F4ED]" />
+                </button>
+                <div className="absolute bottom-4 right-4 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-sm text-[#F4F4ED]/70 text-[10px]" style={{ fontFamily: 'satoshi' }}>
+                  {selectedImage + 1} / {images.length}
+                </div>
+                {/* Mobile thumbnail strip */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  {images.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setSelectedImage(i)}
+                      className={`w-1.5 h-1.5 rounded-full transition-all ${selectedImage === i ? 'bg-white scale-125' : 'bg-white/40'}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
 
         {/* ── RIGHT: details panel ── */}
-        <div data-lenis-prevent className="lg:w-1/2 w-full lg:h-full lg:overflow-y-auto bg-[#e8e6e1]">
+        <div data-lenis-prevent className="lg:w-[38%] w-full lg:h-full lg:overflow-y-auto bg-[#e8e6e1]">
           <div className="min-h-full flex items-start lg:items-center">
             <div className="w-full px-6 py-10 lg:px-14 lg:py-12 max-w-xl mx-auto space-y-6">
 
