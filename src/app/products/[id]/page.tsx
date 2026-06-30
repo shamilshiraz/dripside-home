@@ -17,6 +17,7 @@ import toast from 'react-hot-toast'
 import { RootState } from '@/redux/store'
 import { useGetProductByIdQuery, useAddToCartMutation } from '@/redux/api/UserApi'
 import Navbar from '@/components/Navbar'
+import ZoomImage from '@/components/ZoomImage'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface IVariant {
@@ -192,11 +193,11 @@ export default function ProductPage() {
                 <Package size={48} className="text-[#191B1C]/15" />
               </div>
             ) : (
-              <img
+              <ZoomImage
                 key={selectedImage}
                 src={images[selectedImage]}
                 alt={product.name}
-                className="w-full h-full object-cover transition-opacity duration-300"
+                zoomScale={2.2}
               />
             )}
             {/* Back button */}
@@ -229,10 +230,10 @@ export default function ProductPage() {
                   key={i}
                   onClick={() => setSelectedImage(i)}
                   className={`relative block w-full shrink-0 aspect-[4/5] overflow-hidden transition-all duration-200 ${
-                    selectedImage === i ? 'ring-2 ring-inset ring-[#F42D23]' : 'hover:opacity-90'
+                    selectedImage === i ? 'ring-2 ring-inset ring-[#F42D23]' : ''
                   }`}
                 >
-                  <img src={src} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                  <ZoomImage src={src} alt={`View ${i + 1}`} zoomScale={1.8} />
                   {selectedImage === i && (
                     <div className="absolute inset-0 bg-[#F42D23]/5 pointer-events-none" />
                   )}
