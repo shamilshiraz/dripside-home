@@ -293,11 +293,11 @@ function AllProductsPage() {
         </div>
 
         {/* ── SEARCH + FILTER BAR ───────────────────────────────────────────── */}
-        <div className="sticky top-[72px] z-40 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
+        <div className="sticky top-[72px] z-10 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
 
             {/* Search */}
-            <div className="flex-1 relative">
+            <div className="flex-1 relative mt-3">
               <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#191B1C]/30 pointer-events-none" />
               <input
                 ref={inputRef}
@@ -324,7 +324,7 @@ function AllProductsPage() {
             </div>
 
             {/* Sort dropdown */}
-            <div ref={sortRef} className="relative shrink-0">
+            <div ref={sortRef} className="relative mt-3 shrink-0">
               <button
                 onClick={() => setSortOpen((v) => !v)}
                 className={`flex items-center gap-2 h-11 px-4 rounded-full border text-xs uppercase tracking-wider transition-all ${
@@ -369,7 +369,7 @@ function AllProductsPage() {
             </div>
 
             {/* Filter icon (visual) */}
-            <button className="shrink-0 w-11 h-11 rounded-full bg-white border border-[#191B1C]/10 flex items-center justify-center hover:border-[#191B1C]/25 transition-all text-[#191B1C]/50 hover:text-[#191B1C]">
+            <button className="shrink-0 w-11 h-11 mt-3 rounded-full bg-white border border-[#191B1C]/10 flex items-center justify-center hover:border-[#191B1C]/25 transition-all text-[#191B1C]/50 hover:text-[#191B1C]">
               <SlidersHorizontal size={15} />
             </button>
           </div>
