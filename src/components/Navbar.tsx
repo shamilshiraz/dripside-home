@@ -148,7 +148,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
             </div>
 
             <button
-              onClick={() => { setOpen(false); router.push('/#products') }}
+              onClick={() => { setOpen(false); router.push('/products') }}
               className="px-6 py-3 rounded-full bg-[#F42D23] text-[#F4F4ED] font-satoshi text-sm hover:bg-[#F4F4ED] hover:text-[#191B1C] transition-colors duration-300"
             >
               Explore
