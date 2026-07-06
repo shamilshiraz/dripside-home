@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -137,8 +137,12 @@ function ArtistSignupForm() {
   const goBack = () => setStep((s) => s - 1);
 
   // ── Submit ──────────────────────────────────────────────────────────────────
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  // Plain click handler, not a <form onSubmit> — there is no native <form> for
+  // this wizard, specifically so nothing (Enter key, file-picker dialogs,
+  // mobile keyboard "Go"/"Done") can trigger a premature native submit event.
+  // The only way this ever runs is the final step's "Submit Application" click.
+  const handleSubmit = async () => {
+    if (step !== STEPS.length - 1) return;
     if (!validate()) return;
 
     setSubmitting(true);
@@ -265,7 +269,7 @@ function ArtistSignupForm() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5">
             {/* ── STEP 1: Brand Name ── */}
             {step === 0 && (
               <div className="flex flex-col gap-1.5">
@@ -530,7 +534,8 @@ function ArtistSignupForm() {
                 </button>
               ) : (
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={handleSubmit}
                   disabled={submitting}
                   className="
                     flex-1 flex items-center justify-center gap-2
@@ -556,7 +561,7 @@ function ArtistSignupForm() {
                 </button>
               )}
             </div>
-          </form>
+          </div>
 
           {/* Footer */}
           <p
