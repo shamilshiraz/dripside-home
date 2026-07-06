@@ -26,7 +26,6 @@ function VerifyOtpForm() {
   // Pass-through data for "Change Email" back-link
   const userData = {
     name: searchParams.get("name") ?? "",
-    username: searchParams.get("username") ?? "",
     phone: searchParams.get("phone") ?? "",
     password: searchParams.get("password") ?? "",
   };

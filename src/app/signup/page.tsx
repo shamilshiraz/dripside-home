@@ -2,14 +2,13 @@
 
 import { FormEvent, Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Phone, AtSign } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Mail, Lock, User, Phone } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useSignupMutation } from "@/redux/api/UserApi";
 
 interface Errors {
   name?: string;
-  username?: string;
   email?: string;
   phone?: string;
   password?: string;
@@ -35,7 +34,6 @@ function SignupForm() {
   const searchParams = useSearchParams();
 
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +46,6 @@ function SignupForm() {
   // Pre-fill if returning from OTP page
   useEffect(() => {
     if (searchParams.get("name")) setName(searchParams.get("name")!);
-    if (searchParams.get("username")) setUsername(searchParams.get("username")!);
     if (searchParams.get("email")) setEmail(searchParams.get("email")!);
     if (searchParams.get("phone")) setPhone(searchParams.get("phone")!);
     if (searchParams.get("password")) setPassword(searchParams.get("password")!);
@@ -57,7 +54,6 @@ function SignupForm() {
   const validate = (): boolean => {
     const next: Errors = {};
     if (!name.trim()) next.name = "Name is required";
-    if (!username.trim()) next.username = "Username is required";
     if (!email) next.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(email)) next.email = "Invalid email";
     if (!phone.trim()) next.phone = "Phone number is required";
@@ -78,11 +74,11 @@ function SignupForm() {
     }
 
     try {
-      const response = await signup({ name, username, email, phone, password }).unwrap();
+      const response = await signup({ name, email, phone, password }).unwrap();
 
       if (response.data?.user?.email) {
         toast.success("Account created! Please verify your email.");
-        const qs = new URLSearchParams({ email: response.data.user.email, name, username, phone, password });
+        const qs = new URLSearchParams({ email: response.data.user.email, name, phone, password });
         router.replace(`/verify-otp?${qs.toString()}`);
       } else {
         toast.error("Registration failed. Please try again.");
@@ -146,29 +142,17 @@ function SignupForm() {
           </div>
 
           <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
-            {/* Name + Username row */}
-            <div className="grid grid-cols-2 gap-3">
-              <Field
-                id="name"
-                label="Name"
-                icon={<User size={13} />}
-                type="text"
-                placeholder="John Doe"
-                value={name}
-                onChange={setName}
-                error={errors.name}
-              />
-              <Field
-                id="username"
-                label="Username"
-                icon={<AtSign size={13} />}
-                type="text"
-                placeholder="johndoe"
-                value={username}
-                onChange={setUsername}
-                error={errors.username}
-              />
-            </div>
+            {/* Full Name */}
+            <Field
+              id="name"
+              label="Full Name"
+              icon={<User size={13} />}
+              type="text"
+              placeholder="John Doe"
+              value={name}
+              onChange={setName}
+              error={errors.name}
+            />
 
             {/* Email */}
             <Field

@@ -97,7 +97,6 @@ export const UserApi = createApi({
     signup: builder.mutation({
       query: (user: {
         name: string;
-        username: string;
         email: string;
         phone: string;
         password: string;
