@@ -351,7 +351,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
                         <ChevronRight size={14} className="text-[#F4F4ED]/45" />
                       </Link>
 
-                      <Link
+                      {/* <Link
                         href="/settings"
                         onClick={() => setPopoverOpen(false)}
                         className="
@@ -365,7 +365,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
                       >
                         Settings
                         <Settings size={14} className="text-[#F4F4ED]/45" />
-                      </Link>
+                      </Link> */}
 
                   
 
