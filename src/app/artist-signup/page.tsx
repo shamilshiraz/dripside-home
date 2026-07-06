@@ -12,7 +12,6 @@ import {
   Upload,
   FileText,
   X,
-  CheckCircle2,
 } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -124,9 +123,14 @@ function ArtistSignupForm() {
     }
 
     if (step === 2) {
-      if (instagram && !URL_RE.test(instagram)) next.instagram = "Invalid Instagram URL.";
-      if (behance && !URL_RE.test(behance)) next.behance = "Invalid Behance URL.";
-      if (linkedin && !URL_RE.test(linkedin)) next.linkedin = "Invalid LinkedIn URL.";
+      if (!instagram.trim()) next.instagram = "Instagram link is required.";
+      else if (!URL_RE.test(instagram)) next.instagram = "Invalid Instagram URL.";
+
+      if (!behance.trim()) next.behance = "Behance link is required.";
+      else if (!URL_RE.test(behance)) next.behance = "Invalid Behance URL.";
+
+      if (!linkedin.trim()) next.linkedin = "LinkedIn link is required.";
+      else if (!URL_RE.test(linkedin)) next.linkedin = "Invalid LinkedIn URL.";
     }
 
     setErrors(next);
@@ -451,7 +455,7 @@ function ArtistSignupForm() {
                     >
                       {label}{" "}
                       <span className="normal-case tracking-normal text-[#F4F4ED]/20">
-                        (optional)
+                        (required)
                       </span>
                     </label>
                     <div
@@ -485,7 +489,7 @@ function ArtistSignupForm() {
                   className="text-[10px] text-[#F4F4ED]/25 leading-relaxed"
                   style={{ fontFamily: "satoshi" }}
                 >
-                  At least one social profile helps us verify your creative presence.
+                  All three profiles help us verify your creative presence.
                 </p>
               </div>
             )}
