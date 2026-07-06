@@ -201,9 +201,9 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
             </button> */}
 
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
+              {/* <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
                 <FlipLink text="Explore" light />
-              </button>
+              </button> */}
 
                <button
                 onClick={() => router.push('/products?focus=search')}
