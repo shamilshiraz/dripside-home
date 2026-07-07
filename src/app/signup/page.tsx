@@ -43,12 +43,23 @@ function SignupForm() {
 
   const [signup, { isLoading }] = useSignupMutation();
 
-  // Pre-fill if returning from OTP page
+  // Pre-fill if returning from the OTP page. Only `email` ever travels via the
+  // URL — name/phone/password are read back from sessionStorage so nothing
+  // sensitive ends up in the address bar, browser history, or server logs.
   useEffect(() => {
-    if (searchParams.get("name")) setName(searchParams.get("name")!);
     if (searchParams.get("email")) setEmail(searchParams.get("email")!);
-    if (searchParams.get("phone")) setPhone(searchParams.get("phone")!);
-    if (searchParams.get("password")) setPassword(searchParams.get("password")!);
+
+    try {
+      const raw = sessionStorage.getItem("pendingSignup");
+      if (raw) {
+        const draft = JSON.parse(raw) as { name?: string; phone?: string; password?: string };
+        if (draft.name) setName(draft.name);
+        if (draft.phone) setPhone(draft.phone);
+        if (draft.password) setPassword(draft.password);
+      }
+    } catch {
+      // ignore malformed/inaccessible storage
+    }
   }, [searchParams]);
 
   const validate = (): boolean => {
@@ -78,7 +89,12 @@ function SignupForm() {
 
       if (response.data?.user?.email) {
         toast.success("Account created! Please verify your email.");
-        const qs = new URLSearchParams({ email: response.data.user.email, name, phone, password });
+        try {
+          sessionStorage.setItem("pendingSignup", JSON.stringify({ name, phone, password }));
+        } catch {
+          // ignore — worst case the "change email" prefill just won't work
+        }
+        const qs = new URLSearchParams({ email: response.data.user.email });
         router.replace(`/verify-otp?${qs.toString()}`);
       } else {
         toast.error("Registration failed. Please try again.");

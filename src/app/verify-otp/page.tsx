@@ -23,13 +23,6 @@ function VerifyOtpForm() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [errors, setErrors] = useState<{ otp?: string; email?: string }>({});
 
-  // Pass-through data for "Change Email" back-link
-  const userData = {
-    name: searchParams.get("name") ?? "",
-    phone: searchParams.get("phone") ?? "",
-    password: searchParams.get("password") ?? "",
-  };
-
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
@@ -83,6 +76,11 @@ function VerifyOtpForm() {
     try {
       await verifyOtp({ email, otp: otp.join("") }).unwrap();
       toast.success("Email verified! You can now sign in.");
+      try {
+        sessionStorage.removeItem("pendingSignup");
+      } catch {
+        // ignore
+      }
       router.replace("/login");
     } catch (err: unknown) {
       const error = err as { data?: { message?: string } };
@@ -90,7 +88,9 @@ function VerifyOtpForm() {
     }
   };
 
-  const changeEmailQs = new URLSearchParams(userData).toString();
+  // "Change email" needs no query string at all — name/phone/password are
+  // restored from sessionStorage (set by the signup page), and email is left
+  // blank on purpose since it's the field the user is going back to fix.
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#191B1C]">
@@ -278,7 +278,7 @@ function VerifyOtpForm() {
               >
                 Wrong email?{" "}
                 <Link
-                  href={`/signup?${changeEmailQs}`}
+                  href="/signup"
                   className="text-[#F42D23] font-medium hover:underline"
                 >
                   Change email
