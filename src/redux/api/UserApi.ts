@@ -115,6 +115,14 @@ export const UserApi = createApi({
       }),
     }),
 
+    resendOtp: builder.mutation({
+      query: (credentials: { email: string }) => ({
+        url: "/auth/resend-otp",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+
     artistSignup: builder.mutation({
       query: (formData: FormData) => {
         const token =
@@ -286,6 +294,7 @@ export const {
   useSignupMutation,
   useSignoutMutation,
   useVerifyOtpMutation,
+  useResendOtpMutation,
   useArtistSignupMutation,
   useGetUserProfileQuery,
   useGetCartQuery,

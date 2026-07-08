@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, MailCheck } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useVerifyOtpMutation } from "@/redux/api/UserApi";
+import { useVerifyOtpMutation, useResendOtpMutation } from "@/redux/api/UserApi";
 
 export default function VerifyOtpPage() {
   return (
@@ -26,11 +26,36 @@ function VerifyOtpForm() {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
     const q = searchParams.get("email");
     if (q) setEmail(q);
   }, [searchParams]);
+
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const timer = setInterval(() => {
+      setResendCooldown((prev) => (prev <= 1 ? 0 : prev - 1));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [resendCooldown]);
+
+  const handleResendOtp = async () => {
+    if (!email) {
+      setErrors({ email: "Email is required" });
+      return;
+    }
+    try {
+      await resendOtp({ email }).unwrap();
+      toast.success("A new OTP has been sent to your email.");
+      setResendCooldown(30);
+    } catch (err: unknown) {
+      const error = err as { data?: { message?: string } };
+      toast.error(error?.data?.message ?? "Failed to resend OTP. Please try again.");
+    }
+  };
 
   // ── OTP box helpers ───────────────────────────────────────────────────────
   const handleOtpChange = (index: number, value: string) => {
@@ -267,9 +292,15 @@ function VerifyOtpForm() {
                 Didn&apos;t receive a code?{" "}
                 <button
                   type="button"
-                  className="text-[#F42D23] font-medium hover:underline"
+                  onClick={handleResendOtp}
+                  disabled={isResending || resendCooldown > 0}
+                  className="text-[#F42D23] font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
                 >
-                  Resend OTP
+                  {isResending
+                    ? "Sending…"
+                    : resendCooldown > 0
+                    ? `Resend OTP (${resendCooldown}s)`
+                    : "Resend OTP"}
                 </button>
               </p>
               <p
