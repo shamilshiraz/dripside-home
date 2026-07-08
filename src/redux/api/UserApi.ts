@@ -84,6 +84,8 @@ export const UserApi = createApi({
   reducerPath: "UserApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["User", "Artists", "Products", "Cart", "Orders", "Address"],
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
 
   endpoints: (builder) => ({
     signin: builder.mutation({
