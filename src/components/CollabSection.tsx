@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import FlipLink from '@/components/ui/FlipLink'
 
 export default function TylerCollabSection() {
@@ -49,7 +50,8 @@ export default function TylerCollabSection() {
           </h1>
 
           {/* BUTTON */}
-          <div
+          <Link
+            href="/collab/tyler-the-creator"
             className="
               mt-8
               px-8
@@ -60,7 +62,7 @@ export default function TylerCollabSection() {
             "
           >
             <FlipLink text="Shop Now" />
-          </div>
+          </Link>
 
         </div>
       </div>

@@ -10,6 +10,7 @@ import { RootState, AppDispatch } from '@/redux/store'
 import { clearCredentials } from '@/redux/slices/authSlice'
 import { useSignoutMutation } from '@/redux/api/UserApi'
 import FlipLink from '@/components/ui/FlipLink'
+import SearchDialog from '@/components/SearchDialog'
 import {
   Popover,
   PopoverContent,
@@ -42,6 +43,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
 
   const [open, setOpen] = useState(false)
   const [popoverOpen, setPopoverOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
 
   const [signout] = useSignoutMutation()
 
@@ -78,6 +80,8 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
 
   return (
     <>
+      <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
+
       {/* DROPDOWN */}
       <div
         className={`
@@ -201,12 +205,12 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
             </button> */}
 
             <div className="flex items-center gap-2">
-              <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
+              {/* <button onClick={() => router.push('/#products')} className={`${compact ? 'px-5 py-2.5' : 'px-6 py-3'} rounded-full bg-[#F4F4ED]`}>
                 <FlipLink text="Explore" light />
-              </button>
+              </button> */}
 
                <button
-                onClick={() => router.push('/products?focus=search')}
+                onClick={() => setSearchOpen(true)}
                 className="
                   relative rounded-full
                   cursor-pointer
@@ -347,7 +351,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
                         <ChevronRight size={14} className="text-[#F4F4ED]/45" />
                       </Link>
 
-                      <Link
+                      {/* <Link
                         href="/settings"
                         onClick={() => setPopoverOpen(false)}
                         className="
@@ -361,7 +365,7 @@ export default function Navbar({ compact = false, flat = false }: NavbarProps) {
                       >
                         Settings
                         <Settings size={14} className="text-[#F4F4ED]/45" />
-                      </Link>
+                      </Link> */}
 
                   
 

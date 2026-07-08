@@ -194,8 +194,9 @@ const LIMIT = 24;
 
 function AllProductsPage() {
   const searchParams = useSearchParams();
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const initialSearch = searchParams.get("search") ?? "";
+  const [search, setSearch] = useState(initialSearch);
+  const [debouncedSearch, setDebouncedSearch] = useState(initialSearch);
   const [sort, setSort] = useState("newest");
   const [sortOpen, setSortOpen] = useState(false);
   const [page, setPage] = useState(1);

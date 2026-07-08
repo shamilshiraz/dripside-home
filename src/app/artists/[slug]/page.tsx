@@ -222,13 +222,13 @@ export default function ArtistStorePage() {
               </div>
             </div>
 
-            <Link
+            {/* <Link
               href="/products"
               className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-[#F42D23] hover:text-[#191B1C] transition-colors"
               style={{ fontFamily: "futuraCB" }}
             >
               All Products <ArrowRight size={11} />
-            </Link>
+            </Link> */}
           </div>
 
           {productsLoading ? (
@@ -242,9 +242,9 @@ export default function ArtistStorePage() {
               </div>
               <p className="text-base uppercase tracking-tight text-[#191B1C] mb-2" style={{ fontFamily: "futuraCB" }}>No products yet</p>
               <p className="text-sm text-[#191B1C]/40 mb-6" style={{ fontFamily: "satoshi" }}>This artist hasn't dropped anything yet. Check back soon.</p>
-              <button onClick={() => router.push("/products")} className="px-6 py-3 bg-[#191B1C] text-[#F4F4ED] text-xs uppercase tracking-widest rounded-full hover:bg-[#F42D23] transition-colors" style={{ fontFamily: "futuraCB" }}>
+              {/* <button onClick={() => router.push("/products")} className="px-6 py-3 bg-[#191B1C] text-[#F4F4ED] text-xs uppercase tracking-widest rounded-full hover:bg-[#F42D23] transition-colors" style={{ fontFamily: "futuraCB" }}>
                 Browse All Products
-              </button>
+              </button> */}
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">

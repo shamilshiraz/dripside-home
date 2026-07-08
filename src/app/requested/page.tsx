@@ -1,7 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight, Clock, MessageCircle, Phone } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function RequestedPage() {
+  const supportNumber = "+919895796738";
+  const displayNumber = "+91 98957 96738";
+  const whatsappMessage = encodeURIComponent(
+    "Hi Dripside, I need help with my artist application."
+  );
+
   return (
     <div className="relative min-h-screen bg-[#191B1C] flex flex-col items-center justify-center overflow-hidden px-6 text-center">
       <video
@@ -69,15 +85,61 @@ export default function RequestedPage() {
       </Link>
 
       {/* Footer */}
-      <p
-        className="text-xs text-[#F4F4ED]/25 mt-10"
-        style={{ fontFamily: "satoshi" }}
-      >
-        Need help?{" "}
-        <Link href="/" className="text-[#F42D23] hover:underline">
-          Contact support
-        </Link>
-      </p>
+      <Dialog>
+        <p
+          className="text-xs text-[#F4F4ED]/25 mt-10"
+          style={{ fontFamily: "satoshi" }}
+        >
+          Need help?{" "}
+          <DialogTrigger className="text-[#F42D23] hover:underline">
+            Contact support
+          </DialogTrigger>
+        </p>
+        <DialogContent className="border border-[#F4F4ED]/10 bg-[#191B1C] text-[#F4F4ED] sm:max-w-[360px]">
+          <DialogHeader>
+            <DialogTitle
+              className="text-xl uppercase tracking-[0.08em] text-[#F4F4ED]"
+              style={{ fontFamily: "futuraCB" }}
+            >
+              Contact Support
+            </DialogTitle>
+            <DialogDescription
+              className="text-[#F4F4ED]/50"
+              style={{ fontFamily: "satoshi" }}
+            >
+              Choose how you would like to reach us.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-3 pt-2">
+            <a
+              href={`tel:${supportNumber}`}
+              className="flex h-12 items-center justify-center gap-2 rounded-full bg-[#F42D23] px-5 text-sm uppercase tracking-[0.1em] text-[#F4F4ED] transition-colors duration-300 hover:bg-[#F4F4ED] hover:text-[#191B1C]"
+              style={{ fontFamily: "futuraCB" }}
+            >
+              <Phone size={15} />
+              Call
+            </a>
+            <a
+              href={`https://wa.me/${supportNumber.replace("+", "")}?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-12 items-center justify-center gap-2 rounded-full border border-[#F4F4ED]/15 px-5 text-sm uppercase tracking-[0.1em] text-[#F4F4ED] transition-colors duration-300 hover:border-[#F42D23] hover:text-[#F42D23]"
+              style={{ fontFamily: "futuraCB" }}
+            >
+              <MessageCircle size={15} />
+              Chat (Whatsapp)
+            </a>
+          </div>
+
+          <p
+            className="text-center text-xs text-[#F4F4ED]/35"
+            style={{ fontFamily: "satoshi" }}
+          >
+            {displayNumber}
+          </p>
+        </DialogContent>
+      </Dialog>
       </div>
     </div>
   );

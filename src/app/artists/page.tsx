@@ -193,7 +193,7 @@ function ArtistsPageInner() {
         </div>
 
         {/* ── SEARCH BAR ──────────────────────────────────────────────── */}
-        <div className="sticky top-[86px] z-40 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
+        <div className="sticky top-[86px] z-10 bg-[#F4F4ED]/90 backdrop-blur-md border-b border-[#191B1C]/[0.07]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3">
 
             <div className="flex-1 relative">

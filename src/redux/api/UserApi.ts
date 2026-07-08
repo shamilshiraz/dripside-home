@@ -84,6 +84,8 @@ export const UserApi = createApi({
   reducerPath: "UserApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["User", "Artists", "Products", "Cart", "Orders", "Address"],
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
 
   endpoints: (builder) => ({
     signin: builder.mutation({
@@ -97,7 +99,6 @@ export const UserApi = createApi({
     signup: builder.mutation({
       query: (user: {
         name: string;
-        username: string;
         email: string;
         phone: string;
         password: string;
@@ -111,6 +112,14 @@ export const UserApi = createApi({
     verifyOtp: builder.mutation({
       query: (credentials: { email: string; otp: string }) => ({
         url: "/auth/verify-otp",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+
+    resendOtp: builder.mutation({
+      query: (credentials: { email: string }) => ({
+        url: "/auth/resend-otp",
         method: "POST",
         body: credentials,
       }),
@@ -287,6 +296,7 @@ export const {
   useSignupMutation,
   useSignoutMutation,
   useVerifyOtpMutation,
+  useResendOtpMutation,
   useArtistSignupMutation,
   useGetUserProfileQuery,
   useGetCartQuery,

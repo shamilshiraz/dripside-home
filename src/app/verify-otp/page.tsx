@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, MailCheck } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useVerifyOtpMutation } from "@/redux/api/UserApi";
+import { useVerifyOtpMutation, useResendOtpMutation } from "@/redux/api/UserApi";
 
 export default function VerifyOtpPage() {
   return (
@@ -23,22 +23,39 @@ function VerifyOtpForm() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [errors, setErrors] = useState<{ otp?: string; email?: string }>({});
 
-  // Pass-through data for "Change Email" back-link
-  const userData = {
-    name: searchParams.get("name") ?? "",
-    username: searchParams.get("username") ?? "",
-    phone: searchParams.get("phone") ?? "",
-    password: searchParams.get("password") ?? "",
-  };
-
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
     const q = searchParams.get("email");
     if (q) setEmail(q);
   }, [searchParams]);
+
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const timer = setInterval(() => {
+      setResendCooldown((prev) => (prev <= 1 ? 0 : prev - 1));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [resendCooldown]);
+
+  const handleResendOtp = async () => {
+    if (!email) {
+      setErrors({ email: "Email is required" });
+      return;
+    }
+    try {
+      await resendOtp({ email }).unwrap();
+      toast.success("A new OTP has been sent to your email.");
+      setResendCooldown(30);
+    } catch (err: unknown) {
+      const error = err as { data?: { message?: string } };
+      toast.error(error?.data?.message ?? "Failed to resend OTP. Please try again.");
+    }
+  };
 
   // ── OTP box helpers ───────────────────────────────────────────────────────
   const handleOtpChange = (index: number, value: string) => {
@@ -84,6 +101,11 @@ function VerifyOtpForm() {
     try {
       await verifyOtp({ email, otp: otp.join("") }).unwrap();
       toast.success("Email verified! You can now sign in.");
+      try {
+        sessionStorage.removeItem("pendingSignup");
+      } catch {
+        // ignore
+      }
       router.replace("/login");
     } catch (err: unknown) {
       const error = err as { data?: { message?: string } };
@@ -91,7 +113,9 @@ function VerifyOtpForm() {
     }
   };
 
-  const changeEmailQs = new URLSearchParams(userData).toString();
+  // "Change email" needs no query string at all — name/phone/password are
+  // restored from sessionStorage (set by the signup page), and email is left
+  // blank on purpose since it's the field the user is going back to fix.
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-[#191B1C]">
@@ -268,9 +292,15 @@ function VerifyOtpForm() {
                 Didn&apos;t receive a code?{" "}
                 <button
                   type="button"
-                  className="text-[#F42D23] font-medium hover:underline"
+                  onClick={handleResendOtp}
+                  disabled={isResending || resendCooldown > 0}
+                  className="text-[#F42D23] font-medium hover:underline disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
                 >
-                  Resend OTP
+                  {isResending
+                    ? "Sending…"
+                    : resendCooldown > 0
+                    ? `Resend OTP (${resendCooldown}s)`
+                    : "Resend OTP"}
                 </button>
               </p>
               <p
@@ -279,7 +309,7 @@ function VerifyOtpForm() {
               >
                 Wrong email?{" "}
                 <Link
-                  href={`/signup?${changeEmailQs}`}
+                  href="/signup"
                   className="text-[#F42D23] font-medium hover:underline"
                 >
                   Change email
